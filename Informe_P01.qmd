@@ -1,0 +1,41 @@
+---
+title: "Mi Análisis"
+author: 
+  - "Olivia Marcos"
+  - "Irene Canales"
+  - "Samuel Melián"
+date: today
+format: 
+  html:
+    toc: true
+    theme: cosmo
+  pdf:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    documentclass: article
+execute:
+  warning: false
+  echo: true
+---
+# Sección 1
+
+## Subsección 1.1
+
+Esto es un código de ejemplo hecho con ctrl+alt+i
+
+```{r}
+# URL para descargar el archivo directamente
+url_correcta <- "https://raw.githubusercontent.com/URJCDSLab/LaboratoriosRInferenciaEstadistica/main/data/lab.xlsx"
+
+# Descargar el archivo (asegúrate de que la carpeta "datos" exista)
+download.file(url = url_correcta, 
+              destfile = "../datos/lab.xlsx", 
+              mode = "wb") # El modo "wb" es importante para archivos binarios como .xlsx
+
+lab <- readxl::read_excel("../datos/lab.xlsx")
+head(lab)
+
+```
+
+

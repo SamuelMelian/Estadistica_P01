@@ -1,0 +1,1 @@
+merma <- read.table("../datos/datos_P01.txt")
