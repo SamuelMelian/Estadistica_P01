@@ -7,3 +7,5 @@ download.file(url = url_correcta,
               mode = "wb") # El modo "wb" es importante para archivos binarios como .xlsx
 
 lab <- readxl::read_excel("datos/lab.xlsx")
+
+Una vez que he hecho pull, toco los archivos que quiera y guardo
