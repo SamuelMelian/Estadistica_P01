@@ -1,41 +1,33 @@
 ---
 title: "Estudio de datos biométricos sobre el ciervo volante."
 author: 
-  - "Olivia Marcos"
-  - "Irene Canales"
-  - "Samuel Melián"
+  - "Olivia Marcos Diaz de Otazu"
+  - "Irene Canales Giménez"
+  - "Samuel Melián Benito"
 date: today
-format: 
-  html:
-    toc: true
-    theme: cosmo
+format:
   pdf:
+    documentclass: article
+    geometry: margin=1in
+    include-in-header: 
+      - text: |
+          \usepackage{fvextra}
+          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
     toc: true
     toc-depth: 2
+    toc-title:"Índice"
     number-sections: true
-    documentclass: article
 execute:
   warning: false
   echo: true
 ---
 # Sección 1
 
+
 ## Subsección 1.1
 
 Esto es un código de ejemplo hecho con ctrl+alt+i
 
-```{r}
-# URL para descargar el archivo directamente
-url_correcta <- "https://raw.githubusercontent.com/URJCDSLab/LaboratoriosRInferenciaEstadistica/main/data/lab.xlsx"
 
-# Descargar el archivo (asegúrate de que la carpeta "datos" exista)
-download.file(url = url_correcta, 
-              destfile = "../datos/lab.xlsx", 
-              mode = "wb") # El modo "wb" es importante para archivos binarios como .xlsx
-
-lab <- readxl::read_excel("../datos/lab.xlsx")
-head(lab)
-
-```
 
 
