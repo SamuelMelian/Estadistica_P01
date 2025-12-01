@@ -3,7 +3,7 @@ url_correcta <- "https://raw.githubusercontent.com/URJCDSLab/LaboratoriosRInfere
 
 # Descargar el archivo (asegúrate de que la carpeta "datos" exista)
 download.file(url = url_correcta, 
-              destfile = "../datos/lab.xlsx", 
+              destfile = "datos/lab.xlsx", 
               mode = "wb") # El modo "wb" es importante para archivos binarios como .xlsx
 
-lab <- readxl::read_excel("../datos/lab.xlsx")
+lab <- readxl::read_excel("datos/lab.xlsx")
