@@ -1,5 +1,5 @@
 ---
-title: "Estudio de datos biométricos sobre el ciervo volante"
+title: "Estudio de datos biométricos sobre el ciervo volante."
 author: 
   - "Olivia Marcos"
   - "Irene Canales"
