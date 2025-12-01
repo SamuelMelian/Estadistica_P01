@@ -1,9 +1,9 @@
 ---
 title: "Estudio de datos biométricos sobre el ciervo volante."
 author: 
-  - "Olivia Marcos"
-  - "Irene Canales"
-  - "Samuel Melián"
+  - "Olivia Marcos Díaz de Otazu"
+  - "Irene Canales Giménez"
+  - "Samuel Melián Benito"
 date: today
 format: 
   html:
