@@ -8,7 +8,7 @@ download.file(url = url_correcta,
 
 lab <- readxl::read_excel("datos/lab.xlsx")
 
-lineal_model = lm(y ~ x, data_frame) #Construir modelo lineal y ~ x
+lineal_model = lm(est ~ mg, lab) #Construir modelo lineal y ~ x
 
 #beta 0 será la primera columna de intercept y la pendiente la primera columna de x (variable idnependiente)
 
@@ -17,4 +17,5 @@ lineal_model = lm(y ~ x, data_frame) #Construir modelo lineal y ~ x
 #En F statistics si es significativamente mayor que uno significa que está bien 
 #El r cuadrado indica la cantidad de variabilidad explicada por el modelo (el 68 por ciento de la variabilidad de la variable objetivo (de la y) se explica con el modelo construido) y r cuadrado ajustado penaliza el numero de variables que aparecen ya que artificialmente s epuede hacer que r cuadrado sea 1 si el numero de variables tiende a infinito
 #El sombreado de la recta de regresion es el intervalo de confianza de la media
+plot(lineal_model)
 
