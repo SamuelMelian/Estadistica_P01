@@ -4,30 +4,33 @@ author:
   - "Olivia Marcos Diaz de Otazu"
   - "Irene Canales Giménez"
   - "Samuel Melián Benito"
-date: today
+date: today 
+
 format:
   pdf:
-    documentclass: article
-    geometry: margin=1in
-    include-in-header: 
-      - text: |
-          \usepackage{fvextra}
-          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
     toc: true
+    toc-title: "Índice"
     toc-depth: 2
-    toc-title:"Índice"
-    number-sections: true
+geometry: margin=1in
+include-in-header:
+  - text: |
+      \usepackage{fvextra} \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 execute:
   warning: false
   echo: true
+
 ---
-# Sección 1
+\newpage
+# Objetivo del estudio
 
+\newpage
+# Metodología
 
-## Subsección 1.1
+\newpage
+# Resultados
 
-Esto es un código de ejemplo hecho con ctrl+alt+i
+\newpage
+# Conclusiones
 
-
-
-
+\newpage
+# Anexo:Código R
