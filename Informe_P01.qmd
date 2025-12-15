@@ -37,6 +37,7 @@ library(gt)
 library(flextable)
 library(knitr) 
 library(corrplot)
+library(ggplot2)
 ```
 #Primero leemos el dataset y transformamos las provincias en blanco en "Desconocida"
 
@@ -52,7 +53,7 @@ datos$PROVINCIA <- factor(datos$PROVINCIA, levels = c("Asturias", "Cantabria", "
 Ahora pasemos a realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares elegidos de manera aleatoria, reflejando sus principales características
 
 ```{r}
-set.seed(123) #Semilla para asegurar la aleatoriedad a la hora de elegir la muestra de individuos y así evitar posibles sesgos
+set.seed(78) #Semilla para asegurar la aleatoriedad a la hora de elegir la muestra de individuos y así evitar posibles sesgos
 
 indices <- sample(1:nrow(datos), size = 150, replace = FALSE) #Tomamos la muestra aleatoria de 150 individuos
 
@@ -108,7 +109,7 @@ muestra |> ggplot(aes(KB)) +
 
 
 ```{r}
-tabla_kb_sexo <- datos |>
+tabla_kb_sexo <- muestra |>
   group_by(SEXO) |>
   summarise(
     N = n(),
@@ -123,7 +124,7 @@ print(tabla_kb_sexo)
 ```
 
 ```{r}
-ggplot(datos, aes(x = SEXO, y = KB, fill = SEXO)) +
+ggplot(muestra, aes(x = SEXO, y = KB, fill = SEXO)) +
   geom_boxplot(alpha = 0.6) +
   labs(
     title = "Anchura de la cabeza (KB) por sexo",
@@ -137,7 +138,7 @@ ggplot(datos, aes(x = SEXO, y = KB, fill = SEXO)) +
 
 
 ```{r}
-tabla_kb_provincia <- datos |>
+tabla_kb_provincia <- muestra |>
   group_by(PROVINCIA) |>
   summarise(
     N = n(),
@@ -153,7 +154,7 @@ print(tabla_kb_provincia)
 Presentamos ahora un boxplot o diagrama de cajas y bigotes de la anchura de la cabeza para cada provincia
 
 ```{r}
-ggplot(datos, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
+ggplot(muestra, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
   geom_boxplot(alpha = 0.6) +
   labs(
     title = "Anchura de la cabeza (KB) por provincia",
@@ -166,7 +167,7 @@ ggplot(datos, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
 
 ```{r}
 # Recta de regresión de la variable EL en función de KB
-datos |> 
+muestra |> 
   select(KB, EL) |>  # Selecciona las columnas 'EL' y 'KB'
   ggplot(aes(x=EL, y = KB)) +  # Define las variables para el gráfico
   geom_point(
@@ -183,7 +184,7 @@ datos |>
 
 ```{r}
 # Creación y resumen de un modelo lineal para 'est' en función de 'mg'
-modelo <- datos |> 
+modelo <- muestra |> 
   select(KB, EL) |>  # Selecciona las variables 'KB' y 'EL'
   with(lm(KB ~ EL))  # Crea un modelo lineal de 'KB' en función de 'EL'
 
@@ -198,12 +199,12 @@ r
 
 ```{r}
 # Recta de refresión de la variable 'est' en función de 'mg' filtrando por tipo 'C'
-datos |> 
+muestra |> 
   # 'filter(tipo == "C")' filtra el dataframe para incluir solo las filas donde la columna 'tipo' es igual a "C".
   ggplot(aes(x = EL, y = KB)) +
   facet_wrap(~ SEXO) +
   geom_point(
-    color = "grey40"
+    color = "grey40",
   ) +
   labs(
     x = "Longitud de los élitros (EL, mm)",
@@ -222,12 +223,12 @@ datos |>
 ```{r}
 modelo_hembra <- lm(
     KB ~ EL, 
-    data = datos, 
+    data = muestra, 
     subset = SEXO == "hembra"
 )
 modelo_macho <- lm(
     KB ~ EL, 
-    data = datos, 
+    data = muestra, 
     subset = SEXO == "macho"
 )
 #Valor de r^2 para la regresion lineal KB ~ EL para hembra y macho por separado
@@ -250,7 +251,7 @@ summary(modelo_hembra)$coefficients
 #TENDREMOS QUE DARLES FORMATO A ESTA Y TODAS LAS TABLAS (EN UNA DE LAS FOTOS DEL GRUPO ESTÁ CÓMO SE PUEDE HACER)
 
 ```{r}
-datos |> 
+muestra |> 
   filter(SEXO == "hembra") |> 
   ggplot(
     aes(x = EL, y = KB),
@@ -276,7 +277,7 @@ summary(modelo_macho)$coefficients
 #Lo mismo para esta tabla
 
 ```{r}
-datos |> 
+muestra |> 
   filter(SEXO == "macho") |> 
   ggplot(
     aes(x = EL, y = KB),
@@ -299,3 +300,5 @@ datos |>
 
 \newpage
 # Anexo:Código R
+
+
