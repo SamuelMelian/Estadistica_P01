@@ -11,13 +11,16 @@ format:
     toc: true
     toc-title: "Índice"
     toc-depth: 2
+    include-before-body: 
+    - text: \newpage
+    
 geometry: margin=1in
 include-in-header:
   - text: |
       \usepackage{fvextra} \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 execute:
   warning: false
-  echo: true
+  echo: false
 
 ---
 
@@ -30,6 +33,7 @@ library(flextable)
 library(knitr) 
 library(corrplot)
 library(ggplot2)
+library(kableExtra)
 ```
 
 \newpage
@@ -47,31 +51,63 @@ Se han tomado medidas en machos y hembras de ciervo volante de tres procedencias
 knitr::include_graphics("imagenes/imagen.png")
 ```
 
-El fichero ??? recoge, para un total de 265 ejemplares de ciervo volante, parte de estas variables, concretamente: 
-– Anchura de la cabeza (KB) expresada en milímetros
-– Longitud de los élitros (EL) también en milímetros
-– Sexo del individuo (hembra o macho)
-– Provincia de procedencia del individuo (Asturias, Cantabria u otra)
+El fichero CIERVO.txt recoge, para un total de 265 ejemplares de ciervo volante, parte de estas variables. Concretamente:
+
+– Anchura de la cabeza (KB) expresada en milímetros  
+– Longitud de los élitros (EL) también en milímetros  
+– Sexo del individuo (hembra o macho)  
+– Provincia de procedencia del individuo (Asturias, Cantabria u otra)  
 
 Los objetivos de este estudio son: 
-– Realizar un análisis descriptivo de la anchura de cabeza una muestra de 150 ejemplares que 
-refleje sus principales características.
-– Comparar la anchura de la cabeza de las hembras con la de los machos.
-– Comparar la anchura de la cabeza de los ejemplares de las tres procedencias.
-– Analizar la correlación entre la anchura de la cabeza y la longitud del élitro para la muestra.
-– Analizar, para cada sexo por separado, la correlación entre la anchura de la cabeza y la longitud del élitro.
-– En caso de que para alguno de los sexos ambas variables estén relacionadas, ajustar una recta de 
-regresión que explique la anchura de la cabeza en función de la longitud del élitro e interpretarla.
+
+– Realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares que refleje sus principales características.  
+– Comparar la anchura de la cabeza de las hembras con la de los machos.  
+– Comparar la anchura de la cabeza de los ejemplares de las tres procedencias.  
+– Analizar la correlación entre la anchura de la cabeza y la longitud del élitro para la muestra.  
+– Analizar, para cada sexo por separado, la correlación entre la anchura de la cabeza y la longitud del élitro.  
+– En caso de que para alguno de los sexos ambas variables estén relacionadas, ajustar una recta de regresión que explique la anchura de la cabeza en función de la longitud del élitro e interpretarla.  
 
 \newpage
 # Metodología
 
+En este análisis cuantitativo de tipo descriptivo analizaremos los datos biométricos del ciervo volante. Para ello, emplearemos el software R.
+
+**Selección de la muestra**
+
+Se toma una muestra de 150 ejemplares sobre la población total, manteniendo la proporción original entre machos y hembras. Estos se tomarán de forma arbitraria empleando una semilla para asegurar la aleatoriedad y así evitar posibles sesgos.  
+
+**Análisis de los datos**
+
+Con esta muestra crearemos una tabla para resumir algunos estadísticos: Media, Mediana, Primer cuartil, Tercer cuartil, Desviación estándar, el rango intercuartílico, y finalmente los valores máximo y mínimo. A partir de esta tabla crearemos el histograma.
+
+
+
+**Comparación de la anchura de la cabeza por sexo de los ejemplares**
+
+A continuación se crea una nueva tabla donde se incluya el tamaño de la muestra, la media, la mediana, desviación estándar y el IQR, pero diferenciando entre machos y hembras. A partir de ella creamos un gráfico de tipo boxplot para visualizarlo.
+
+**Comparación de la anchura de la cabeza por procedencia de los ejemplares**
+
+De igual forma, creamos una tabla diferenciando por provincia: ASturias, Cantabria, Otras y Desconocida y se inserta el boxplot correspondiente.  
+
+**Análisis de la correlación entre la anchura de la cabeza y la longitud de élitro**
+
+
+
+**Análisis por sexo de la correlación anterior**
+
+
+**Recta de regresión, por sexo, de la anchura de la cabeza en función de la longitud de los élitros**
+
+
 \newpage
 # Resultados
 
-#Primero leemos el dataset y transformamos las provincias en blanco en "Desconocida"
+**Análisis de los datos**
 
-```{r, echo = TRUE}
+<!--Primero leemos el dataset y transformamos las provincias en blanco en "Desconocida"-->
+
+```{r, echo = FALSE}
 datos <- read.table("./datos/CIERVO.txt", fill=TRUE, dec = ",", na.strings = c("", "NA"), header=TRUE );
 
 datos$PROVINCIA[is.na(datos$PROVINCIA)] <- "Desconocida"
@@ -80,7 +116,7 @@ datos$SEXO <- factor(datos$SEXO, levels = c("hembra", "macho"))
 datos$PROVINCIA <- factor(datos$PROVINCIA, levels = c("Asturias", "Cantabria", "Otras", "Desconocida"))
 ```
 
-Ahora pasemos a realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares elegidos de manera aleatoria, reflejando sus principales características
+<!--Ahora pasemos a realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares elegidos de manera aleatoria, reflejando sus principales características-->
 
 ```{r}
 set.seed(78) #Semilla para asegurar la aleatoriedad a la hora de elegir la muestra de individuos y así evitar posibles sesgos
@@ -90,7 +126,7 @@ indices <- sample(1:nrow(datos), size = 150, replace = FALSE) #Tomamos la muestr
 muestra <- datos[indices, ] #Creamos el dataframe de esta nueva muestra de 150 individuos
 ```
 
-Realizamos un análisis descriptivo del tamaño de la cabeza para la muestra de 150 individuos seleccionando los datos relevantes
+<!--Realizamos un análisis descriptivo del tamaño de la cabeza para la muestra de 150 individuos seleccionando los datos relevantes-->
 
 ```{r}
 tabla_kb <- muestra |>
@@ -106,7 +142,18 @@ tabla_kb <- muestra |>
     Max = max(KB, na.rm = TRUE)
   )
 
-tabla_kb
+tabla_kb |>
+  kable(
+    col.names = c(
+      "N", "Media", "Q1", "Mediana", "Q3",
+      "Desv. típica", "IQR", "Mín", "Máx"
+    ),
+    caption = "Estadísticos descriptivos de la anchura de la cabeza (KB)",
+    digits = 2,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(latex_options = "hold_position")
 ```
 
 
@@ -119,7 +166,7 @@ muestra |> ggplot(aes(KB)) +
     fill = "#A6C8E0", 
     color = "grey30",
     bins = 30,
-    alpha = 0.6
+    alpha = 0.7
   ) +
   geom_density(
     color = "#08306B",
@@ -133,10 +180,18 @@ muestra |> ggplot(aes(KB)) +
     y = "Frecuencia"
   ) +
   
-  theme_bw()
+  theme_bw() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title = element_text(),
+    axis.text = element_text(),
+    panel.grid.major = element_line(color = "grey90"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "grey30", fill = NA, size = 0.8)
+  )
 ```
 
-
+**Comparación de la anchura de la cabeza por sexos**
 
 ```{r}
 tabla_kb_sexo <- muestra |>
@@ -149,7 +204,19 @@ tabla_kb_sexo <- muestra |>
     IQR = IQR(KB, na.rm = TRUE),
 )
 
-print(tabla_kb_sexo)
+tabla_kb_sexo |>
+  kable(
+    col.names = c("Sexo", "N", "Media", "Desv. típica", "Mediana", "IQR"),
+    caption = "\ Estadísticos descriptivos de la anchura de la cabeza (KB) por sexo",
+    digits = 2,
+    booktabs = TRUE,
+    align = "c",
+    escape = FALSE   # permite que LaTeX interprete la caption
+  ) |>
+  kable_styling(
+    latex_options = "hold_position",
+    font_size = 10
+  )
 
 ```
 
@@ -165,7 +232,7 @@ ggplot(muestra, aes(x = SEXO, y = KB, fill = SEXO)) +
   theme(legend.position = "none")
 ```
 
-
+**Comparación de la anchura de la cabeza por provincias**
 
 ```{r}
 tabla_kb_provincia <- muestra |>
