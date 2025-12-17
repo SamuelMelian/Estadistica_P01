@@ -22,6 +22,33 @@ execute:
 ---
 \newpage
 # Objetivo del estudio
+El estudio de Estadística Descriptiva que vamos a realizar tiene como foco el análisis de datos biométricos del **ciervo volante** (*Lucanuscervus*), el mayor escarabajo de Europa y una especie cuya supervivencia está amenazada por la destrucción de su hábitat, bosques con abundancia de madera muerta.
+
+El interés biométrico de esta espacie nos lleva a dos preguntas principales:
+
+**Dimorfismo Sexual:** analizaremos si existen diferencias significativas en tamaño, específicamente en la anchura de la cabeza (KB), entre machos y hembras.
+
+**Influencia del Hábitat:** indagaremos si el tamaño adulto de los ejemplares está correlacionado con la calidad del hábitat de procedencia (Asturia, Cantabria u otra).
+
+Se han tomado medidas en machos y hembras de ciervo volante de tres procedencias, midiendo las variables indicadas en la figura siguiente:
+```{r}
+knitr::include_graphics("imagenes/imagen.png")
+```
+El fichero ??? recoge, para un total de 265 ejemplares de ciervo volante, parte de estas variables, concretamente: 
+– Anchura de la cabeza (KB) expresada en milímetros
+– Longitud de los élitros (EL) también en milímetros
+– Sexo del individuo (hembra o macho)
+– Provincia de procedencia del individuo (Asturias, Cantabria u otra)
+
+Los objetivos de este estudio son: 
+– Realizar un análisis descriptivo de la anchura de cabeza una muestra de 150 ejemplares que 
+refleje sus principales características.
+– Comparar la anchura de la cabeza de las hembras con la de los machos.
+– Comparar la anchura de la cabeza de los ejemplares de las tres procedencias.
+– Analizar la correlación entre la anchura de la cabeza y la longitud del élitro para la muestra.
+– Analizar, para cada sexo por separado, la correlación entre la anchura de la cabeza y la longitud del élitro.
+– En caso de que para alguno de los sexos ambas variables estén relacionadas, ajustar una recta de 
+regresión que explique la anchura de la cabeza en función de la longitud del élitro e interpretarla.
 
 \newpage
 # Metodología
