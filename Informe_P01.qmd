@@ -20,6 +20,18 @@ execute:
   echo: true
 
 ---
+
+```{r}
+library(tidyverse)
+library(summarytools)
+library(GGally)
+library(gt)
+library(flextable)
+library(knitr) 
+library(corrplot)
+library(ggplot2)
+```
+
 \newpage
 # Objetivo del estudio
 El estudio de Estadística Descriptiva que vamos a realizar tiene como foco el análisis de datos biométricos del **ciervo volante** (*Lucanuscervus*), el mayor escarabajo de Europa y una especie cuya supervivencia está amenazada por la destrucción de su hábitat, bosques con abundancia de madera muerta.
@@ -31,6 +43,9 @@ El interés biométrico de esta espacie nos lleva a dos preguntas principales:
 **Influencia del Hábitat:** indagaremos si el tamaño adulto de los ejemplares está correlacionado con la calidad del hábitat de procedencia (Asturia, Cantabria u otra).
 
 Se han tomado medidas en machos y hembras de ciervo volante de tres procedencias, midiendo las variables indicadas en la figura siguiente:
+```{r}
+knitr::include_graphics("imagenes/imagen.png")
+```
 
 El fichero ??? recoge, para un total de 265 ejemplares de ciervo volante, parte de estas variables, concretamente: 
 – Anchura de la cabeza (KB) expresada en milímetros
@@ -54,16 +69,6 @@ regresión que explique la anchura de la cabeza en función de la longitud del �
 \newpage
 # Resultados
 
-```{r}
-library(tidyverse)
-library(summarytools)
-library(GGally)
-library(gt)
-library(flextable)
-library(knitr) 
-library(corrplot)
-library(ggplot2)
-```
 #Primero leemos el dataset y transformamos las provincias en blanco en "Desconocida"
 
 ```{r, echo = TRUE}
