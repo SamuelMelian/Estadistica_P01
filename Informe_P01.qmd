@@ -22,7 +22,7 @@ include-in-header:
       
 execute:
   warning: FALSE
-  echo: true
+  echo: false
 ---
 
 ```{r, echo=FALSE}
@@ -34,6 +34,7 @@ library(flextable)
 library(knitr) 
 library(corrplot)
 library(ggplot2)
+library(dplyr)   
 library(kableExtra)
 ```
 
@@ -58,7 +59,7 @@ El fichero CIERVO.txt recoge, para un total de 265 ejemplares de ciervo volante,
 – Longitud de los élitros (EL) también en milímetros  
 – Sexo del individuo (hembra o macho)  
 – Provincia de procedencia del individuo (Asturias, Cantabria u otra)  
-##hola
+
 Los objetivos de este estudio son: 
 
 – Realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares que refleje sus principales características.  
@@ -71,40 +72,33 @@ Los objetivos de este estudio son:
 \newpage
 # Metodología
 
-En este análisis cuantitativo de tipo descriptivo analizaremos los datos biométricos del ciervo volante. Para ello, emplearemos el software R.
+El siguiente estudio se basa en un análisis estadístico descriptivo de datos biométricos del ciervo volante (Lucanus cervus). En concreto, en relación a patrones de variación morfológica por sexo y por procedencia de los individuos.
+
+**Datos y variables**
+
+La muestra global comprende a 265 ejemplares. Sobre ellos se tienen datos de la anchura de la cabeza (KB) y la longitud de los élitros (EL). La procedencia de los ejemplares comprende Asturias, Cantabria, Otras y Desconocida.
+
+En concreto, se espera que la variable KB permita observar el dimorfismo sexual, mientras que la variable EL se toma también como medida representativa del tamaño, global en este caso, del ejemplar. Por tanto, se espera también una posible relación entre ambas variables
 
 **Selección de la muestra**
 
-Se toma una muestra de 150 ejemplares sobre la población total, manteniendo la proporción original entre machos y hembras. Estos se tomarán de forma arbitraria empleando una semilla para asegurar la aleatoriedad y así evitar posibles sesgos.  
+Se tomará una muestra de 150 ejemplares, de forma que sea una selección representativa del total de la población. Se hará de forma arbitraria y empleando una semilla para asegurar la aleatoriedad y evitar posibles sesgos. 
 
-**Análisis de los datos**
+**Análisis estadístico**
 
-Con esta muestra crearemos una tabla para resumir algunos estadísticos: Media, Mediana, Primer cuartil, Tercer cuartil, Desviación estándar, el rango intercuartílico, y finalmente los valores máximo y mínimo. A partir de esta tabla crearemos el histograma.
+Para comenzar se llevará a cabo un análisis descriptivo para la anchura de la cabeza (KB) para la muestra escogida. En concreto, se analizarán los estadísticos siguientes: media, mediana, cuartiles, desviación típica, rango intercuartílico y valores extremos.
 
+Esto permitirá llevar a cabo una comparación entre machos y hembras, así como un estudio en función del hábitat. A través de las tablas y gráficos adecuado, se buscará observar diferencias según las variables, así como dispersión y valores atípicos.
 
+A continuación, un análisis entre ambas variables: anchura de la cabeza (KB) y longitud de los élitros (EL). El objetivo será encontrar una posible correlación y observar su dispersión. Se llevará cabo sobre la muestra, y por sexo.
 
-**Comparación de la anchura de la cabeza por sexo de los ejemplares**
+Para terminar, se empleará regresión lineal entre las variables para explicar la influencia de una sobre los valores de la otra, y se interpretarán los coeficientes obtenidos para ello. 
 
-A continuación se crea una nueva tabla donde se incluya el tamaño de la muestra, la media, la mediana, desviación estándar y el IQR, pero diferenciando entre machos y hembras. A partir de ella creamos un gráfico de tipo boxplot para visualizarlo.
-
-**Comparación de la anchura de la cabeza por procedencia de los ejemplares**
-
-De igual forma, creamos una tabla diferenciando por provincia: ASturias, Cantabria, Otras y Desconocida y se inserta el boxplot correspondiente.  
-
-**Análisis de la correlación entre la anchura de la cabeza y la longitud de élitro**
-
-
-
-**Análisis por sexo de la correlación anterior**
-
-
-**Recta de regresión, por sexo, de la anchura de la cabeza en función de la longitud de los élitros**
-
+Todo este estudio se realizará a través del software R.
 
 \newpage
 # Resultados
 
-**Análisis de los datos**
 
 <!--Primero leemos el dataset y transformamos las provincias en blanco en "Desconocida"-->
 
@@ -150,11 +144,14 @@ tabla_kb |>
       "Desv. típica", "IQR", "Mín", "Máx"
     ),
     caption = "Estadísticos descriptivos de la anchura de la cabeza (KB)",
-    digits = 2,
+    digits = 4,
     booktabs = TRUE,
     align = "c"
   ) |>
-  kable_styling(latex_options = "hold_position")
+  kable_styling(
+    latex_options = c("hold_position","striped"),
+    font_size = 10
+  )
 ```
 
 
@@ -209,13 +206,13 @@ tabla_kb_sexo |>
   kable(
     col.names = c("Sexo", "N", "Media", "Desv. típica", "Mediana", "IQR"),
     caption = "\ Estadísticos descriptivos de la anchura de la cabeza (KB) por sexo",
-    digits = 2,
+    digits = 4,
     booktabs = TRUE,
     align = "c",
     escape = FALSE   # permite que LaTeX interprete la caption
   ) |>
   kable_styling(
-    latex_options = "hold_position",
+    latex_options = c("hold_position","striped"),
     font_size = 10
   )
 
@@ -246,7 +243,21 @@ tabla_kb_provincia <- muestra |>
     IQR = IQR(KB, na.rm = TRUE),
 )
 
-print(tabla_kb_provincia)
+tabla_kb_provincia |>
+  kable(
+    col.names = c(
+      "Provincia", "N", "Media",
+      "Desv. típica", "Mediana", "IQR"
+    ),
+    caption = "Estadísticos descriptivos de la anchura de la cabeza (KB) por provincia",
+    digits = 4,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(
+    latex_options = c("hold_position", "striped"),
+    full_width = FALSE
+  )
 ```
 
 Presentamos ahora un boxplot o diagrama de cajas y bigotes de la anchura de la cabeza para cada provincia
@@ -288,17 +299,38 @@ modelo <- muestra |>
 
 #Valor de r^2
 r2 <- summary(modelo)$r.squared
-r2
+#r2
 
 #Valor de r
 r <- sign(coef(modelo)[2]) * sqrt(r2)
-r
+#r
 ```
 
 ```{r}
-# Recta de refresión de la variable 'est' en función de 'mg' filtrando por tipo 'C'
+tabla_cor <- data.frame(
+  r2 = r2,
+  r = r
+)
+
+tabla_cor |>
+  kable(
+    col.names = c("Coeficiente de determinación (r²)", "Coeficiente de correlación (r)"),
+    digits = 4,
+    booktabs = TRUE,
+    caption = "Valores de r² y r para la regresión KB ~ EL (todos los individuos)",
+    align = "c"
+  ) |>
+  kable_styling(
+    latex_options = c("hold_position", "striped"),
+    full_width = FALSE
+  )
+
+```
+
+```{r}
+# Recta de regresión de la variable 'est' en función de 'mg' filtrando por tipo 'C'
+# 'filter(tipo == "C")' filtra el dataframe para incluir solo las filas donde la columna 'tipo' es igual a "C".
 muestra |> 
-  # 'filter(tipo == "C")' filtra el dataframe para incluir solo las filas donde la columna 'tipo' es igual a "C".
   ggplot(aes(x = EL, y = KB)) +
   facet_wrap(~ SEXO) +
   geom_point(
@@ -312,12 +344,14 @@ muestra |>
   # 'geom_smooth(method = "lm")' añade una línea de ajuste lineal al gráfico. 'method = "lm"' indica que se usa un modelo lineal para el ajuste.
   geom_smooth(
     method = "lm",
-    aes(color = SEXO),
+    aes(color = SEXO)
   ) + 
   scale_color_manual(values = c("hembra" = "navy", "macho" = "darkred")) +
   theme_bw();
 
 ```
+
+
 ```{r}
 modelo_hembra <- lm(
     KB ~ EL, 
@@ -338,15 +372,52 @@ r_hembra <- sign(coef(modelo_hembra)[2]) * sqrt(r2_hembra)
 r_macho <- sign(coef(modelo_macho)[2]) * sqrt(r2_macho)
 ```
 
-#Crearemos una tabla que tenga el valor de r y r^2 para la regresión de hembra y lo mismo para la de macho (tabla 2x2)
-
-#APARTADO F
-
 ```{r}
-summary(modelo_hembra)$coefficients
+tabla_correlacion <- data.frame(
+  Sexo = c("Hembra", "Macho"),
+  r = c(r_hembra, r_macho),
+  r2 = c(r2_hembra, r2_macho)
+)
+
+tabla_correlacion |>
+  kable(
+    col.names = c("Sexo", "Coeficiente de correlación (r)", "Coeficiente de determinación (r²)"),
+    caption = "Coeficientes de correlación y determinación de la regresión KB y EL por sexo",
+    digits = 4,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(
+    latex_options = c("hold_position", "striped"),
+    full_width = FALSE,
+    font_size = 10
+  )
 
 ```
-#TENDREMOS QUE DARLES FORMATO A ESTA Y TODAS LAS TABLAS (EN UNA DE LAS FOTOS DEL GRUPO ESTÁ CÓMO SE PUEDE HACER)
+
+
+```{r}
+summary(modelo_hembra)$coefficients |>
+  as.data.frame() |>
+  kable(
+    col.names = c(
+      "Estimación",
+      "Error estándar",
+      "Estadístico t",
+      "Valor p"
+    ),
+    caption = "Coeficientes del modelo de regresión lineal KB y EL para hembras",
+    digits = 4,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(
+    latex_options = c("hold_position", "striped"),
+    full_width = FALSE
+  )
+
+```
+
 
 ```{r}
 muestra |> 
@@ -375,13 +446,27 @@ plot(modelo_hembra)
 ```
 
 
-
-#Nos falta también modificar si queremos los colores de las gráficas, poner bien títulos, ejes...
-
 ```{r}
-summary(modelo_macho)$coefficients
+summary(modelo_macho)$coefficients |>
+  as.data.frame() |>
+  kable(
+    col.names = c(
+      "Estimación",
+      "Error estándar",
+      "Estadístico t",
+      "Valor p"
+    ),
+    caption = "Coeficientes del modelo de regresión lineal KB y EL para machos",
+    digits = 4,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(
+    latex_options = c("hold_position", "striped"),
+    full_width = FALSE
+  )
 ```
-#Lo mismo para esta tabla
+
 
 ```{r}
 muestra |> 
