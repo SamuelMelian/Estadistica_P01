@@ -4,7 +4,7 @@ author:
   - "Olivia Marcos Diaz de Otazu"
   - "Irene Canales Giménez"
   - "Samuel Melián Benito"
-date: today 
+date: "20/12/2025" 
 
 format:
   pdf:
@@ -17,14 +17,15 @@ format:
 geometry: margin=1in
 include-in-header:
   - text: |
-      \usepackage{fvextra} \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+      \usepackage{fvextra}
+      \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+      
 execute:
-  warning: false
-  echo: false
-
+  warning: FALSE
+  echo: true
 ---
 
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 library(summarytools)
 library(GGally)
@@ -38,16 +39,16 @@ library(kableExtra)
 
 \newpage
 # Objetivo del estudio
-El estudio de Estadística Descriptiva que vamos a realizar tiene como foco el análisis de datos biométricos del **ciervo volante** (*Lucanuscervus*), el mayor escarabajo de Europa y una especie cuya supervivencia está amenazada por la destrucción de su hábitat, bosques con abundancia de madera muerta.
+El estudio de Estadística Descriptiva que vamos a realizar tiene como foco el análisis de datos biométricos del **ciervo volante** (*Lucanus cervus*), el mayor escarabajo de Europa y una especie cuya supervivencia está amenazada por la destrucción de su hábitat, bosques con abundancia de madera muerta.
 
-El interés biométrico de esta espacie nos lleva a dos preguntas principales:
+El interés biométrico de esta especie nos lleva a dos preguntas principales:
 
-**Dimorfismo Sexual:** analizaremos si existen diferencias significativas en tamaño, específicamente en la anchura de la cabeza (KB), entre machos y hembras.
+**Dimorfismo Sexual:** analizaremos si existen diferencias significativas en tamaño entre machos y hembras.
 
-**Influencia del Hábitat:** indagaremos si el tamaño adulto de los ejemplares está correlacionado con la calidad del hábitat de procedencia (Asturia, Cantabria u otra).
+**Influencia del Hábitat:** indagaremos si el tamaño adulto de los ejemplares está correlacionado con la calidad del hábitat de procedencia (Asturias, Cantabria u otra).
 
 Se han tomado medidas en machos y hembras de ciervo volante de tres procedencias, midiendo las variables indicadas en la figura siguiente:
-```{r}
+```{r, echo=FALSE, fig.align="center", out.width="80%"}
 knitr::include_graphics("imagenes/imagen.png")
 ```
 
@@ -57,7 +58,7 @@ El fichero CIERVO.txt recoge, para un total de 265 ejemplares de ciervo volante,
 – Longitud de los élitros (EL) también en milímetros  
 – Sexo del individuo (hembra o macho)  
 – Provincia de procedencia del individuo (Asturias, Cantabria u otra)  
-
+##hola
 Los objetivos de este estudio son: 
 
 – Realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares que refleje sus principales características.  
