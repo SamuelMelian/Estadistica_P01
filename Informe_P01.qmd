@@ -25,7 +25,7 @@ execute:
   echo: false
 ---
 
-```{r, echo=FALSE}
+```{r}
 library(tidyverse)
 library(summarytools)
 library(GGally)
@@ -49,7 +49,7 @@ El interés biométrico de esta especie nos lleva a dos preguntas principales:
 **Influencia del Hábitat:** indagaremos si el tamaño adulto de los ejemplares está correlacionado con la calidad del hábitat de procedencia (Asturias, Cantabria u otra).
 
 Se han tomado medidas en machos y hembras de ciervo volante de tres procedencias, midiendo las variables indicadas en la figura siguiente:
-```{r, echo=FALSE, fig.align="center", out.width="80%"}
+```{r}
 knitr::include_graphics("imagenes/imagen.png")
 ```
 
@@ -74,16 +74,19 @@ Los objetivos de este estudio son:
 
 El siguiente estudio se basa en un análisis estadístico descriptivo de datos biométricos del ciervo volante (Lucanus cervus). En concreto, en relación a patrones de variación morfológica por sexo y por procedencia de los individuos.
 
+\vspace{1cm}
 **Datos y variables**
 
 La muestra global comprende a 265 ejemplares. Sobre ellos se tienen datos de la anchura de la cabeza (KB) y la longitud de los élitros (EL). La procedencia de los ejemplares comprende Asturias, Cantabria, Otras y Desconocida.
 
 En concreto, se espera que la variable KB permita observar el dimorfismo sexual, mientras que la variable EL se toma también como medida representativa del tamaño, global en este caso, del ejemplar. Por tanto, se espera también una posible relación entre ambas variables
 
+\vspace{1cm}
 **Selección de la muestra**
 
 Se tomará una muestra de 150 ejemplares, de forma que sea una selección representativa del total de la población. Se hará de forma arbitraria y empleando una semilla para asegurar la aleatoriedad y evitar posibles sesgos. 
 
+\vspace{1cm}
 **Análisis estadístico**
 
 Para comenzar se llevará a cabo un análisis descriptivo para la anchura de la cabeza (KB) para la muestra escogida. En concreto, se analizarán los estadísticos siguientes: media, mediana, cuartiles, desviación típica, rango intercuartílico y valores extremos.
@@ -99,7 +102,6 @@ Todo este estudio se realizará a través del software R.
 \newpage
 # Resultados
 
-
 <!--Primero leemos el dataset y transformamos las provincias en blanco en "Desconocida"-->
 
 ```{r, echo = FALSE}
@@ -111,6 +113,8 @@ datos$SEXO <- factor(datos$SEXO, levels = c("hembra", "macho"))
 datos$PROVINCIA <- factor(datos$PROVINCIA, levels = c("Asturias", "Cantabria", "Otras", "Desconocida"))
 ```
 
+##Análisis de la anchura de la cabeza de los individuos de la muestra
+
 <!--Ahora pasemos a realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares elegidos de manera aleatoria, reflejando sus principales características-->
 
 ```{r}
@@ -121,7 +125,7 @@ indices <- sample(1:nrow(datos), size = 150, replace = FALSE) #Tomamos la muestr
 muestra <- datos[indices, ] #Creamos el dataframe de esta nueva muestra de 150 individuos
 ```
 
-<!--Realizamos un análisis descriptivo del tamaño de la cabeza para la muestra de 150 individuos seleccionando los datos relevantes-->
+<!--Realizamos un análisis descriptivo del tamaño de la cabeza para la muestra de 150 individuos seleccionando los datos relevantes (TABLA)-->
 
 ```{r}
 tabla_kb <- muestra |>
@@ -189,7 +193,9 @@ muestra |> ggplot(aes(KB)) +
   )
 ```
 
-**Comparación de la anchura de la cabeza por sexos**
+El histograma representa la distribución de la anchura de la cabeza de nuestra muestra de 150 ejemplares. Presenta un pico (moda) alrededor de los 8,5mm y asimetría positiva, con una cola alargada hacia los valores más grandes, lo que implica que la mayoría de individuos presenta una anchura de cabeza pequeña y un número reducido alcznza valores mayores. Los estadísticos obtenidos en la tabla refuerzan este argumento ya que la media (12,15mm) es mayor a la mediana (10,8mm).
+
+##Comparación de la anchura de la cabeza por sexos
 
 ```{r}
 tabla_kb_sexo <- muestra |>
@@ -230,7 +236,10 @@ ggplot(muestra, aes(x = SEXO, y = KB, fill = SEXO)) +
   theme(legend.position = "none")
 ```
 
-**Comparación de la anchura de la cabeza por provincias**
+Tanto la Tabla 2 como el diagrama de caja muestran que los machos presentan una anchura de cabeza promedio mayor que las hembras, con una diferencia de 5,96mm. Además, los machos presentan mayor variabilidad, su desviación típica de 3,48 y IQR 4,9 frente a los 0,91 y 1,3 de las hembras indican mayor dispersión en los valores de los machos. Estas claras diferencias sugieren un marcado dimorfismo sexual en la anchura de la cabeza.
+
+
+##Comparación de la anchura de la cabeza por provincias
 
 ```{r}
 tabla_kb_provincia <- muestra |>
@@ -260,7 +269,7 @@ tabla_kb_provincia |>
   )
 ```
 
-Presentamos ahora un boxplot o diagrama de cajas y bigotes de la anchura de la cabeza para cada provincia
+Presentamos ahora un boxplot o diagrama de cajas y bigotes de la anchura de la cabeza para cada provincia.
 
 ```{r}
 ggplot(muestra, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
@@ -273,6 +282,16 @@ ggplot(muestra, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
   theme_minimal() +
   theme(legend.position = "none")
 ```
+
+\vspace{1cm}
+En este análisis por provincia podemos observar que Asturias concentra la mayor parte de la muestra. Otras presenta la mayor media seguida por Cantabria, y los individuos de procedencia desconocida ligeramente mayor que los ejemplares con menos promedio de anchura de cabeza que son los de Asturias. La variabilidad es mayor en el grupo de Otras indicado por su mayor desviación típica y mayor IQR.
+
+En el diagrama de cajas los valores de la anchura de la cabeza de las distintas provincias se sitúan en intervalos muy parecidos por lo que las diferencias son moderadas entre provincias.
+
+
+##Correlación de la anchura de la cabeza y longitud de élitros
+
+La siguiente gráfica representa el análisis comparativo de las dos características de la muestra completa.
 
 ```{r}
 # Recta de regresión de la variable EL en función de KB
@@ -317,7 +336,7 @@ tabla_cor |>
     col.names = c("Coeficiente de determinación (r²)", "Coeficiente de correlación (r)"),
     digits = 4,
     booktabs = TRUE,
-    caption = "Valores de r² y r para la regresión KB ~ EL (todos los individuos)",
+    caption = "Valores de r² y r para la regresión KB - EL (todos los individuos)",
     align = "c"
   ) |>
   kable_styling(
@@ -326,6 +345,11 @@ tabla_cor |>
   )
 
 ```
+
+**Interpretación:** La correlación es fuerte al ser la r positiva cerca de 1.
+
+
+##Correlación de la anchura de la cabeza y longitud de élitros por sexo
 
 ```{r}
 # Recta de regresión de la variable 'est' en función de 'mg' filtrando por tipo 'C'
@@ -372,6 +396,7 @@ r_hembra <- sign(coef(modelo_hembra)[2]) * sqrt(r2_hembra)
 r_macho <- sign(coef(modelo_macho)[2]) * sqrt(r2_macho)
 ```
 
+
 ```{r}
 tabla_correlacion <- data.frame(
   Sexo = c("Hembra", "Macho"),
@@ -395,6 +420,9 @@ tabla_correlacion |>
 
 ```
 
+**Interpretación:** la correlación es muy fuerte tanto en el caso de las hembras como en el de los machos, mejora bastante al separarlo por sexos.
+
+##Modelo de regresión lineal
 
 ```{r}
 summary(modelo_hembra)$coefficients |>
@@ -435,7 +463,7 @@ muestra |>
   labs(
     x = "",
     y = "",
-    title = "",
+    title = "Modelo de regresión - Hembra",
   )
 ```
 
@@ -445,6 +473,9 @@ par(mfrow = c(2, 2))
 plot(modelo_hembra)
 ```
 
+**Ecuación del modelo:**
+**Coeficiente determinación:**
+**Interpretación:**
 
 ```{r}
 summary(modelo_macho)$coefficients |>
@@ -484,7 +515,7 @@ muestra |>
   labs(
     x = "",
     y = "",
-    title = "",
+    title = "Modelo de regresión - Macho",
   )
 ```
 ```{r}
@@ -492,10 +523,15 @@ par(mfrow = c(2, 2))
 plot(modelo_macho)
 ```
 
+**Ecuación del modelo:**
+**Coeficiente determinación:**
+**Interpretación:**
 
 
 \newpage
 # Conclusiones
+
+
 
 \newpage
 # Anexo:Código R
