@@ -225,6 +225,8 @@ tabla_kb_sexo |>
 ```
 
 ```{r}
+#| fig.width: 4.5
+#| fig.height: 3
 ggplot(muestra, aes(x = SEXO, y = KB, fill = SEXO)) +
   geom_boxplot(alpha = 0.6) +
   labs(
@@ -271,6 +273,8 @@ tabla_kb_provincia |>
 
 
 ```{r}
+#| fig.width: 4.5
+#| fig.height: 3
 ggplot(muestra, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
   geom_boxplot(alpha = 0.6) +
   labs(
@@ -293,7 +297,8 @@ En el diagrama de cajas los valores de la anchura de la cabeza de las distintas 
 La siguiente gráfica representa el análisis comparativo de las dos características de la muestra completa.
 
 ```{r}
-# Recta de regresión de la variable EL en función de KB
+#| fig.width: 4.5
+#| fig.height: 3
 muestra |> 
   select(KB, EL) |>  # Selecciona las columnas 'EL' y 'KB'
   ggplot(aes(x=EL, y = KB)) +  # Define las variables para el gráfico
@@ -351,8 +356,8 @@ tabla_cor |>
 ## Correlación de la anchura de la cabeza y longitud de élitros por sexo
 
 ```{r}
-# Recta de regresión de la variable 'est' en función de 'mg' filtrando por tipo 'C'
-# 'filter(tipo == "C")' filtra el dataframe para incluir solo las filas donde la columna 'tipo' es igual a "C".
+#| fig.width: 7
+#| fig.height: 4
 muestra |> 
   ggplot(aes(x = EL, y = KB)) +
   facet_wrap(~ SEXO) +
@@ -447,6 +452,8 @@ summary(modelo_hembra)$coefficients |>
 
 
 ```{r}
+#| fig.width: 4.5
+#| fig.height: 3
 muestra |> 
   filter(SEXO == "hembra") |> 
   ggplot(
@@ -463,7 +470,12 @@ muestra |>
     x = "",
     y = "",
     title = "Modelo de regresión - Hembra",
-  )
+  )+ 
+  theme(
+    plot.title = element_text(size = 10),
+    axis.title = element_text(size = 9),
+    axis.text  = element_text(size = 8)
+)
 ```
 
 
@@ -503,6 +515,8 @@ summary(modelo_macho)$coefficients |>
 
 
 ```{r}
+#| fig.width: 4.5
+#| fig.height: 3
 muestra |> 
   filter(SEXO == "macho") |> 
   ggplot(
