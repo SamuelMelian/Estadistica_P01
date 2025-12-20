@@ -113,7 +113,7 @@ datos$SEXO <- factor(datos$SEXO, levels = c("hembra", "macho"))
 datos$PROVINCIA <- factor(datos$PROVINCIA, levels = c("Asturias", "Cantabria", "Otras", "Desconocida"))
 ```
 
-##Análisis de la anchura de la cabeza de los individuos de la muestra
+## Análisis de la anchura de la cabeza de los individuos de la muestra
 
 <!--Ahora pasemos a realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares elegidos de manera aleatoria, reflejando sus principales características-->
 
@@ -193,9 +193,9 @@ muestra |> ggplot(aes(KB)) +
   )
 ```
 
-El histograma representa la distribución de la anchura de la cabeza de nuestra muestra de 150 ejemplares. Presenta un pico (moda) alrededor de los 8,5mm y asimetría positiva, con una cola alargada hacia los valores más grandes, lo que implica que la mayoría de individuos presenta una anchura de cabeza pequeña y un número reducido alcznza valores mayores. Los estadísticos obtenidos en la tabla refuerzan este argumento ya que la media (12,15mm) es mayor a la mediana (10,8mm).
+El histograma representa la distribución de la anchura de la cabeza de nuestra muestra de 150 ejemplares. Presenta un pico (moda) alrededor de los 8,5mm y asimetría positiva, con una cola alargada hacia los valores más grandes, lo que implica que la mayoría de individuos presenta una anchura de cabeza pequeña y un número reducido alcanza valores mayores. Los estadísticos obtenidos en la tabla refuerzan este argumento ya que la media (12,15mm) es mayor a la mediana (10,8mm).
 
-##Comparación de la anchura de la cabeza por sexos
+## Comparación de la anchura de la cabeza por sexos
 
 ```{r}
 tabla_kb_sexo <- muestra |>
@@ -239,7 +239,7 @@ ggplot(muestra, aes(x = SEXO, y = KB, fill = SEXO)) +
 Tanto la Tabla 2 como el diagrama de caja muestran que los machos presentan una anchura de cabeza promedio mayor que las hembras, con una diferencia de 5,96mm. Además, los machos presentan mayor variabilidad, su desviación típica de 3,48 y IQR 4,9 frente a los 0,91 y 1,3 de las hembras indican mayor dispersión en los valores de los machos. Estas claras diferencias sugieren un marcado dimorfismo sexual en la anchura de la cabeza.
 
 
-##Comparación de la anchura de la cabeza por provincias
+## Comparación de la anchura de la cabeza por provincias
 
 ```{r}
 tabla_kb_provincia <- muestra |>
@@ -269,7 +269,6 @@ tabla_kb_provincia |>
   )
 ```
 
-Presentamos ahora un boxplot o diagrama de cajas y bigotes de la anchura de la cabeza para cada provincia.
 
 ```{r}
 ggplot(muestra, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
@@ -289,7 +288,7 @@ En este análisis por provincia podemos observar que Asturias concentra la mayor
 En el diagrama de cajas los valores de la anchura de la cabeza de las distintas provincias se sitúan en intervalos muy parecidos por lo que las diferencias son moderadas entre provincias.
 
 
-##Correlación de la anchura de la cabeza y longitud de élitros
+## Correlación de la anchura de la cabeza y longitud de élitros
 
 La siguiente gráfica representa el análisis comparativo de las dos características de la muestra completa.
 
@@ -346,10 +345,10 @@ tabla_cor |>
 
 ```
 
-**Interpretación:** La correlación es fuerte al ser la r positiva cerca de 1.
+**Interpretación:** La correlación es fuerte al ser la r positiva cerca de 1. Además, el valor de la r^2 muestra que un 75,6% de la variabilidad de la variable KB se explica por los valores de la otra, EL, de nuevo reiterando la estrecha relación entre ellas.
 
 
-##Correlación de la anchura de la cabeza y longitud de élitros por sexo
+## Correlación de la anchura de la cabeza y longitud de élitros por sexo
 
 ```{r}
 # Recta de regresión de la variable 'est' en función de 'mg' filtrando por tipo 'C'
@@ -422,7 +421,7 @@ tabla_correlacion |>
 
 **Interpretación:** la correlación es muy fuerte tanto en el caso de las hembras como en el de los machos, mejora bastante al separarlo por sexos.
 
-##Modelo de regresión lineal
+## Modelo de regresión lineal
 
 ```{r}
 summary(modelo_hembra)$coefficients |>
@@ -474,7 +473,11 @@ plot(modelo_hembra)
 ```
 
 **Ecuación del modelo:**
+¿?
+La ecuación del modelo se obtiene de los valores de la tabla. Para hembras se tiene KB = -0.1333 + 0.4610*EL.
+
 **Coeficiente determinación:**
+
 **Interpretación:**
 
 ```{r}
@@ -524,14 +527,20 @@ plot(modelo_macho)
 ```
 
 **Ecuación del modelo:**
+En este caso, la ecuación será KB = -13.604 + 1.2940*EL
+
 **Coeficiente determinación:**
+
+
 **Interpretación:**
 
 
 \newpage
 # Conclusiones
 
-
+- 
+-
+-
 
 \newpage
 # Anexo:Código R
