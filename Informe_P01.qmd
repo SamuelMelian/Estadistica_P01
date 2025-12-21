@@ -4,7 +4,7 @@ author:
   - "Olivia Marcos Diaz de Otazu"
   - "Irene Canales Giménez"
   - "Samuel Melián Benito"
-date: "20/12/2025" 
+date: "12/21/2025" 
 
 format:
   pdf:
@@ -118,7 +118,7 @@ datos$PROVINCIA <- factor(datos$PROVINCIA, levels = c("Asturias", "Cantabria", "
 <!--Ahora pasemos a realizar un análisis descriptivo de la anchura de la cabeza de una muestra de 150 ejemplares elegidos de manera aleatoria, reflejando sus principales características-->
 
 ```{r}
-set.seed(78) #Semilla para asegurar la aleatoriedad a la hora de elegir la muestra de individuos y así evitar posibles sesgos
+set.seed(78) #Ponemos semilla random para asegurar la aleatoriedad a la hora de elegir la muestra de individuos y así evitar posibles sesgos
 
 indices <- sample(1:nrow(datos), size = 150, replace = FALSE) #Tomamos la muestra aleatoria de 150 individuos
 
@@ -197,7 +197,7 @@ muestra |> ggplot(aes(KB)) +
   )
 ```
 
-El histograma representa la distribución de la anchura de la cabeza de nuestra muestra de 150 ejemplares. Presenta un pico (moda) alrededor de los 8,5mm y asimetría positiva, con una cola alargada hacia los valores más grandes, lo que implica que la mayoría de individuos presenta una anchura de cabeza pequeña y un número reducido alcanza valores mayores. Los estadísticos obtenidos en la tabla refuerzan este argumento ya que la media (12,15mm) es mayor a la mediana (10,8mm).
+El histograma representa la distribución de la anchura de la cabeza de nuestra muestra de $150$ ejemplares. Presenta un pico (moda) alrededor de los $8,5$mm y asimetría positiva, con una cola alargada hacia los valores más grandes, lo que implica que la mayoría de individuos presenta una anchura de cabeza pequeña y un número reducido alcanza valores mayores. Los estadísticos obtenidos en la tabla refuerzan este argumento ya que la media ($12,15$mm) es mayor a la mediana ($10,8$mm).
 
 ## Comparación de la anchura de la cabeza por sexos
 
@@ -219,7 +219,7 @@ tabla_kb_sexo |>
     digits = 4,
     booktabs = TRUE,
     align = "c",
-    escape = FALSE   # permite que LaTeX interprete la caption
+    escape = FALSE  
   ) |>
   kable_styling(
     latex_options = c("hold_position","striped"),
@@ -248,7 +248,7 @@ ggplot(muestra, aes(x = SEXO, y = KB, fill = SEXO)) +
   )
 ```
 
-Tanto la Tabla 2 como el diagrama de caja muestran que los machos presentan una anchura de cabeza promedio mayor que las hembras, con una diferencia de 5,96mm. Además, los machos presentan mayor variabilidad, su desviación típica de 3,48 y IQR 4,9 frente a los 0,91 y 1,3 de las hembras indican mayor dispersión en los valores de los machos. Estas claras diferencias sugieren un marcado dimorfismo sexual en la anchura de la cabeza.
+Tanto la Tabla 2 como el diagrama de caja muestran que los machos presentan una anchura de cabeza promedio mayor que las hembras, con una diferencia de $5,96$mm. Además, los machos presentan mayor variabilidad, su desviación típica de $3,48$ y IQR $4,9$ frente a los $0,91$ y $1,3$ de las hembras indican mayor dispersión en los valores de los machos. Estas claras diferencias sugieren un marcado dimorfismo sexual en la anchura de la cabeza.
 
 
 ## Comparación de la anchura de la cabeza por provincias
@@ -317,12 +317,12 @@ La siguiente gráfica representa el análisis comparativo de las dos caracterís
 #| fig.height: 3
 #| fig-align: center
 muestra |> 
-  select(KB, EL) |>  # Selecciona las columnas 'EL' y 'KB'
-  ggplot(aes(x=EL, y = KB)) +  # Define las variables para el gráfico
+  select(KB, EL) |> 
+  ggplot(aes(x=EL, y = KB)) +
   geom_point(
     color = "grey40",
-  ) +  # Añade puntos al gráfico
-  theme_bw() +  # Aplica un tema en blanco y negro
+  ) +
+  theme_bw() +
   labs(
     x = "Longitud de los élitros (EL, mm)",
     y = "Anchura de la cabeza (KB, mm)",
@@ -332,7 +332,7 @@ muestra |>
     method = lm, 
     se = TRUE,
     color = "darkgreen"
-  ) + # Añade una línea de regresión lineal sin intervalo de confianza
+  ) +
   theme(
     plot.title = element_text(size = 10),
     axis.title = element_text(size = 8),
@@ -342,10 +342,9 @@ muestra |>
 
 
 ```{r}
-# Creación y resumen de un modelo lineal para 'est' en función de 'mg'
 modelo <- muestra |> 
-  select(KB, EL) |>  # Selecciona las variables 'KB' y 'EL'
-  with(lm(KB ~ EL))  # Crea un modelo lineal de 'KB' en función de 'EL'
+  select(KB, EL) |> 
+  with(lm(KB ~ EL))
 
 #Valor de r^2
 r2 <- summary(modelo)$r.squared
@@ -377,7 +376,7 @@ tabla_cor |>
 
 ```
 
-**Interpretación:** La correlación es fuerte al ser la r positiva cerca de 1. Además, el valor de la r^2 muestra que un 75,6% de la variabilidad de la variable KB se explica por los valores de la otra, EL, de nuevo reiterando la estrecha relación entre ellas.
+**Interpretación:** La correlación es fuerte al ser la r positiva cerca de $1$. Además, el valor de $R^2$ muestra que un $75,6$% de la variabilidad de la variable KB (anchura de la cabeza) se explica por los valores de la otra, EL (longitud de los élitros), de nuevo reiterando la estrecha relación entre ellas.
 
 
 ## Correlación de la anchura de la cabeza y longitud de élitros por sexo
@@ -398,7 +397,6 @@ muestra |>
     y = "Anchura de la cabeza (KB, mm)",
     title = "Regresión lineal entre anchura de la cabeza (KB) y longitud de los élitros (EL) por sexo"
   ) + 
-  # 'geom_smooth(method = "lm")' añade una línea de ajuste lineal al gráfico. 'method = "lm"' indica que se usa un modelo lineal para el ajuste.
   geom_smooth(
     method = "lm",
     aes(color = SEXO)
@@ -425,11 +423,9 @@ modelo_macho <- lm(
     data = muestra, 
     subset = SEXO == "macho"
 )
-#Valor de r^2 para la regresion lineal KB ~ EL para hembra y macho por separado
 r2_hembra <- summary(modelo_hembra)$r.squared
 r2_macho <- summary(modelo_macho)$r.squared
 
-#Valor de r para la regresion lineal KB ~ EL para hembra y macho por separado
 r_hembra <- sign(coef(modelo_hembra)[2]) * sqrt(r2_hembra)
 r_macho <- sign(coef(modelo_macho)[2]) * sqrt(r2_macho)
 ```
@@ -527,13 +523,15 @@ mtext("Diagnóstico del modelo de regresión lineal (Hembras)",
       outer = TRUE, line = -1, cex = 1)
 ```
 
-**Ecuación del modelo:**
-¿?
-La ecuación del modelo se obtiene de los valores de la tabla. Para hembras se tiene KB = -0.1333 + 0.4610*EL.
 
-**Coeficiente determinación:**
-
-**Interpretación:**
+El modelo de regresión lineal ajustado para las hembras viene dado por
+$$
+\widehat{KB} = -0.1333 + 0.4610\,EL.
+$$
+La pendiente positiva indica que, en promedio, la anchura de la cabeza aumenta aproximadamente
+$0.46$ mm por cada incremento de $1$ mm en la longitud de los élitros. El coeficiente de
+determinación es $R^2 \approx 0.9118$, lo que implica que alrededor del $91.2\%$ de la variabilidad de
+la anchura de la cabeza queda explicada por la longitud de los élitros. Además, las gráficas de diagnóstico no muestran desviaciones importantes de los supuestos del modelo lineal.
 
 ```{r}
 summary(modelo_macho)$coefficients |>
@@ -596,17 +594,18 @@ mtext("Diagnóstico del modelo de regresión lineal (Machos)",
       outer = TRUE, line = -1, cex = 1)
 ```
 
-**Ecuación del modelo:**
-En este caso, la ecuación será KB = -13.604 + 1.2940*EL
-
-**Coeficiente determinación:**
-
-
-**Interpretación:**
-
+Para los machos, el modelo de regresión lineal ajustado es
+$$
+\widehat{KB} = -13.6044 + 1.2940\,EL.
+$$
+En este caso, la pendiente es algo mayor que en el modelo para las hembras, lo que indica que un aumento de
+$1$ mm en la longitud de los élitros se asocia con un incremento medio de aproximadamente
+$1.29$ mm en la anchura de la cabeza. El coeficiente de determinación es
+$R^2 \approx 0.9089$, lo que nos hace ver que el modelo se ajusta muy bien. El análisis de las gráficas de diagnóstico también confirma en este caso la adecuación del ajuste del modelo lineal.
 
 \newpage
-# Conclusiones
+
+## Conclusiones
 En este análisis estadístico se ha realizado un análisis descriptivo de datos biométricos del ciervo volante (\textit{Lucanus cervus}) a partir de una muestra aleatoria de 150 individuos. El estudio en su totalidad se ha centrado en el análisis de la anchira de la cabeza, su variabilidad en función del sexo y procedencia geográfica y la relación con la longitud de los élitros.
 
 En resumen, la variable KB (anchura de la cabeza) presenta una distribución asimétrica (a la derecha), con una media de aproximadamente $12,14$ mm, algo superior a la mediana ($11,2$ mm) y una dispersión relativamente moderada. La anchura de la cabeza toma valores comprendidos entre $7$ y $20$ mm aproximadamente, lo que nos ha hecho ver que existe variabilidad morfológica en nuestra muestra tomada.
@@ -622,6 +621,7 @@ Cuando hacemos el ajuste de regresión lineal por sexos podemos confirmar esto �
 A modo de resumen, estos resultados nos permiten concluir que el sexo es el factor más influyente (de los analizados) en la anchura de la cabeza del ciervo volante, mientras que la procedencia geográfica tiene un efecto mucho menor. Además, la fuerte relación entre la anchura de la cabeza y la longitud de los élitros nos permite afirmar que la longitud de los élitros es una buena variable para explicar el tamaño de la cabeza, y especialmente cuando el análisis se hace de manera separada por sexos.
 
 \newpage
+
 # Anexo:Código R
 
 ```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
