@@ -363,10 +363,10 @@ tabla_cor <- data.frame(
 
 tabla_cor |>
   kable(
-    col.names = c("Coeficiente de determinación (r²)", "Coeficiente de correlación (r)"),
+    col.names = c("Coeficiente de determinación (R²)", "Coeficiente de correlación (r)"),
     digits = 4,
     booktabs = TRUE,
-    caption = "Valores de r² y r para la regresión KB - EL (todos los individuos)",
+    caption = "Valores de R² y r para la regresión KB - EL (todos los individuos)",
     align = "c"
   ) |>
   kable_styling(
@@ -376,7 +376,7 @@ tabla_cor |>
 
 ```
 
-**Interpretación:** La correlación es fuerte al ser la r positiva cerca de $1$. Además, el valor de $r^2$ muestra que un $75,6$% de la variabilidad de la variable KB (anchura de la cabeza) se explica en función de los valores de la otra, EL (longitud de los élitros), de nuevo reiterando la relación entre ellas.
+**Interpretación:** La correlación es fuerte al ser la r positiva cerca de $1$. Además, el valor de $R^2$ muestra que un $75,6$% de la variabilidad de la variable KB (anchura de la cabeza) se explica en función de los valores de la otra, EL (longitud de los élitros), de nuevo reiterando la relación entre ellas.
 
 
 ## Correlación de la anchura de la cabeza y longitud de élitros por sexo
@@ -440,7 +440,7 @@ tabla_correlacion <- data.frame(
 
 tabla_correlacion |>
   kable(
-    col.names = c("Sexo", "Coeficiente de correlación (r)", "Coeficiente de determinación (r²)"),
+    col.names = c("Sexo", "Coeficiente de correlación (r)", "Coeficiente de determinación (R²)"),
     caption = "Coeficientes de correlación y determinación de la regresión KB y EL por sexo",
     digits = 4,
     booktabs = TRUE,
@@ -616,7 +616,7 @@ Pasando ahora a analizar la variación geográfica, podemos ver que se detectan 
 
 Ahora pasamos a analizar otro punto muy importante del estudio, que es la relación entre la anchura de la cabeza (KB) y la longitud de los élitros (EL). Podemos afirmar que la correlación entre ambas variables es fuertemente lineal y positiva (el coeficiente de correlación es aproximadamente $0,9$), lo que nos indica que existe una relación fuerte entre ambas variables. No obstante, comprobamos que esta relación se refuerza todavía más al realizar el análisis por sexos, siendo los valores de coeficiente de correlación de $0,95$ para las hembras y $0,93$ para los machos. Esto nos permite sacar la conclusión de que una gran parte de la variabilidad de la anchura de la cabeza puede explicarse mediante la longitud de los élitros.
 
-Cuando hacemos el ajuste de regresión lineal por sexos podemos confirmar esto último que hemos comentado. En ambos casos (machos y hembras), la pendiente estimada es positiva y estadísticamente significativa, lo que indica que incrementos en la longitud del élitro se asocian con aumentos en la anchura de la cabeza. Esta pendiente es mayor en los machos que en las hembras, lo que significa que en este grupo la anchura de la cabeza crece más en función de la longitud de los élitros. Los valores de $r^2$ son muy elevados en ambos casos, lo que indica que existe un buen ajuste de los modelos y por tanto resultan realmente útiles para predecir.
+Cuando hacemos el ajuste de regresión lineal por sexos podemos confirmar esto último que hemos comentado. En ambos casos (machos y hembras), la pendiente estimada es positiva y estadísticamente significativa, lo que indica que incrementos en la longitud del élitro se asocian con aumentos en la anchura de la cabeza. Esta pendiente es mayor en los machos que en las hembras, lo que significa que en este grupo la anchura de la cabeza crece más en función de la longitud de los élitros. Los valores de $R^2$ son muy elevados en ambos casos, lo que indica que existe un buen ajuste de los modelos y por tanto resultan realmente útiles para predecir.
 
 A modo de resumen, estos resultados nos permiten concluir que el sexo es el factor más influyente (de los analizados) en la anchura de la cabeza del ciervo volante, mientras que la procedencia geográfica tiene un efecto mucho menor. Además, la fuerte relación entre la anchura de la cabeza y la longitud de los élitros nos permite afirmar que la longitud de los élitros es una buena variable para explicar el tamaño de la cabeza, y especialmente cuando el análisis se hace de manera separada por sexos.
 
