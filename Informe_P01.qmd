@@ -72,7 +72,7 @@ Los objetivos de este estudio son:
 \newpage
 # Metodología
 
-El siguiente estudio se basa en un análisis estadístico descriptivo de datos biométricos del ciervo volante (Lucanus cervus). En concreto, en relación a patrones de variación morfológica por sexo y por procedencia de los individuos.
+Como hemos mencionado, el siguiente estudio se basa en un análisis estadístico descriptivo de datos biométricos del ciervo volante (Lucanus cervus). En concreto, en relación a patrones de variación morfológica por sexo y por procedencia de los individuos.
 
 \vspace{1cm}
 **Datos y variables**
@@ -91,7 +91,7 @@ Se tomará una muestra de 150 ejemplares, de forma que sea una selección repres
 
 Para comenzar se llevará a cabo un análisis descriptivo para la anchura de la cabeza (KB) para la muestra escogida. En concreto, se analizarán los estadísticos siguientes: media, mediana, cuartiles, desviación típica, rango intercuartílico y valores extremos.
 
-Esto permitirá llevar a cabo una comparación entre machos y hembras, así como un estudio en función del hábitat. A través de las tablas y gráficos adecuado, se buscará observar diferencias según las variables, así como dispersión y valores atípicos.
+Esto permitirá llevar a cabo una comparación entre machos y hembras, así como un estudio en función del hábitat. A través de las tablas y gráficos adecuados, se buscará observar diferencias según las variables, así como dispersión y valores atípicos.
 
 A continuación, un análisis entre ambas variables: anchura de la cabeza (KB) y longitud de los élitros (EL). El objetivo será encontrar una posible correlación y observar su dispersión. Se llevará cabo sobre la muestra, y por sexo.
 
@@ -376,7 +376,7 @@ tabla_cor |>
 
 ```
 
-**Interpretación:** La correlación es fuerte al ser la r positiva cerca de $1$. Además, el valor de $R^2$ muestra que un $75,6$% de la variabilidad de la variable KB (anchura de la cabeza) se explica por los valores de la otra, EL (longitud de los élitros), de nuevo reiterando la estrecha relación entre ellas.
+**Interpretación:** La correlación es fuerte al ser la r positiva cerca de $1$. Además, el valor de $r^2$ muestra que un $75,6$% de la variabilidad de la variable KB (anchura de la cabeza) se explica en función de los valores de la otra, EL (longitud de los élitros), de nuevo reiterando la relación entre ellas.
 
 
 ## Correlación de la anchura de la cabeza y longitud de élitros por sexo
@@ -454,7 +454,7 @@ tabla_correlacion |>
 
 ```
 
-**Interpretación:** la correlación es muy fuerte tanto en el caso de las hembras como en el de los machos, mejora bastante al separarlo por sexos.
+**Interpretación:** la correlación es muy fuerte tanto en el caso de las hembras como en el de los machos, y se observa una mejora considerable al separarlo por sexos.
 
 ## Modelo de regresión lineal
 
@@ -601,20 +601,20 @@ $$
 En este caso, la pendiente es algo mayor que en el modelo para las hembras, lo que indica que un aumento de
 $1$ mm en la longitud de los élitros se asocia con un incremento medio de aproximadamente
 $1.29$ mm en la anchura de la cabeza. El coeficiente de determinación es
-$R^2 \approx 0.9089$, lo que nos hace ver que el modelo se ajusta muy bien. El análisis de las gráficas de diagnóstico también confirma en este caso la adecuación del ajuste del modelo lineal.
+$R^2 \approx 0.9089$, lo que nos hace ver que el modelo se ajusta muy bien. El análisis de las gráficas de diagnóstico también confirma la adecuación del ajuste del modelo lineal en este caso.
 
 \newpage
 
 ## Conclusiones
-En este análisis estadístico se ha realizado un análisis descriptivo de datos biométricos del ciervo volante (\textit{Lucanus cervus}) a partir de una muestra aleatoria de 150 individuos. El estudio en su totalidad se ha centrado en el análisis de la anchira de la cabeza, su variabilidad en función del sexo y procedencia geográfica y la relación con la longitud de los élitros.
+En este análisis estadístico se ha realizado un análisis descriptivo de datos biométricos del ciervo volante (\textit{Lucanus cervus}) a partir de una muestra aleatoria de 150 individuos. El estudio en su totalidad se ha centrado en el análisis de la anchura de la cabeza, su variabilidad en función del sexo y procedencia geográfica y la relación con la longitud de los élitros.
 
 En resumen, la variable KB (anchura de la cabeza) presenta una distribución asimétrica (a la derecha), con una media de aproximadamente $12,14$ mm, algo superior a la mediana ($11,2$ mm) y una dispersión relativamente moderada. La anchura de la cabeza toma valores comprendidos entre $7$ y $20$ mm aproximadamente, lo que nos ha hecho ver que existe variabilidad morfológica en nuestra muestra tomada.
 
 A continuación, el análisis por sexos nos ha permitido comprobar la existencia de un claro dimorfismo sexual. Los machos presentan una anchura de la cabeza media de $14,91$ mm, lo que resulta casi $6$ mm más que el promedio de las hembras de la muestra. Además, la variabilidad en los machos es aproximadamente el triple que en las hembras, mostrando estas últimas valores bastante concentrados en torno a la media como se puede comprobar en la respectiva caja del diagrama. Estas conclusiones han sido posibles gracias a estadísticos descriptivos y diagramas de caja.
 
-Pasando ahora a analizar la variación geográfica, podemos ver que se detectan pequeñas muestras en la anchura de la cabeza, pero no muy significativas. Los valores no nos han permitido ver contrastes tan marcados como los del sexo. No obstante, los marcados con origen desconocido son los que presentan mayor promedio de anchura de la cabeza ($13,2$ mm), seguidos de los de Cantabria ($12,9$ mm), Asturias ($12,1$ mm) y otras procedencias ($11,2$ mm).
+Pasando ahora a analizar la variación geográfica, podemos ver que se detectan pequeñas diferencias en la anchura de la cabeza, pero no muy significativas. Los valores no nos han permitido ver contrastes tan marcados como los del sexo. No obstante, los marcados con origen desconocido son los que presentan mayor promedio de anchura de la cabeza ($13,2$ mm), seguidos de los de Cantabria ($12,9$ mm), Asturias ($12,1$ mm) y otras procedencias ($11,2$ mm).
 
-Ahora pasamos a analizar otro punto muy importante del estudio, que es la relación entre la anchura de la cabeza (KB) y la longitud de los élitros (EL). Podemos afirmar que la correlación entre ambas variables es fuertemente lineal y positiva (el coeficiente de Pearson es aproximadamente $0,9$), lo que nos indica que existe una relación fuerte entre ambas variables. No obstante, comprobamos que esta relación se refuerza todavía más al realizar el análisis por sexos, siendo los valores de coeficiente de Pearson de $0,95$ para las hembras y $0,93$ para los machos. Esto nos permite sacar la conclusión de que una gran parte de la variabilidad de la anchura de la cabeza puede explicarse mediante la longitud de los élitros.
+Ahora pasamos a analizar otro punto muy importante del estudio, que es la relación entre la anchura de la cabeza (KB) y la longitud de los élitros (EL). Podemos afirmar que la correlación entre ambas variables es fuertemente lineal y positiva (el coeficiente de correlación es aproximadamente $0,9$), lo que nos indica que existe una relación fuerte entre ambas variables. No obstante, comprobamos que esta relación se refuerza todavía más al realizar el análisis por sexos, siendo los valores de coeficiente de correlación de $0,95$ para las hembras y $0,93$ para los machos. Esto nos permite sacar la conclusión de que una gran parte de la variabilidad de la anchura de la cabeza puede explicarse mediante la longitud de los élitros.
 
 Cuando hacemos el ajuste de regresión lineal por sexos podemos confirmar esto último que hemos comentado. En ambos casos (machos y hembras), la pendiente estimada es positiva y estadísticamente significativa, lo que indica que incrementos en la longitud del élitro se asocian con aumentos en la anchura de la cabeza. Esta pendiente es mayor en los machos que en las hembras, lo que significa que en este grupo la anchura de la cabeza crece más en función de la longitud de los élitros. Los valores de $r^2$ son muy elevados en ambos casos, lo que indica que existe un buen ajuste de los modelos y por tanto resultan realmente útiles para predecir.
 
