@@ -1,5 +1,5 @@
 ---
-title: "Estudio de datos biométricos sobre el ciervo volante. Inferencia estadística"
+title: "Estudio de datos biométricos sobre el ciervo volante. Inferencia estadística."
 author: 
   - "Olivia Marcos Diaz de Otazu"
   - "Irene Canales Giménez"
@@ -56,12 +56,26 @@ datos <- datos |> dplyr::filter(!is.na(PROVINCIA))
 summary(datos)
 ```
 \newpage 
-## Metodología
-Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos (dado que eliminamos los 15 con origen desconocido), en lugar de seleccionar una muestra aleatoria en lugar de como se hizo en la práctica 1
+# Objetivo del estudio
+Continuaremos el estudio de datos biométricos del **ciervo volante** (*Lucanus cervus*) estudiando los valores de anchura de cabeza (KB) y longitud de los élitros (EL), y sus diferencias dependiendo de su sexo y procedencia.
+
+En base a las conclusiones obtenidas en la primera práctica de estadística descriptiva, comprobaremos, utilizando técnicas de inferencia si dichas conclusiones son estadísticamente significativas o sólo responden al azar.
+
+El objetivo del estudio es responder a las siguentes preguntas:
+
+1. ¿Entre qué valores fluctúa el promedio de la anchura de la cabeza y de la longitud de los élitros del Lucanus Cervus?
+2. ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza y la longitud de los élitros según sexo?
+3. ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza y la longitud de los élitros según si habitan en Cantabria o en Asturias?
+4. Suponiendo que la muestra es representativa de la población, ¿los hábitats son igual de numerosos en Cantabria y Asturias?, ¿y en términos de sexo?
+
+
+\newpage 
+# Metodología
+Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos (dado que eliminamos los 15 con origen desconocido), en lugar de seleccionar una muestra aleatoria como se hizo en la práctica 1.
 
 \newpage
-## Análisis de resultados
-### Pregunta 1. ¿Entre qué valores fluctúa el promedio de la anchura de la cabeza y de la longitud de los élitros del Lacanus Cervus?
+# Análisis de resultados
+## Pregunta 1. ¿Entre qué valores fluctúa el promedio de la anchura de la cabeza y de la longitud de los élitros del *Lucanus Cervus*?
 
 ```{r funcion-intervalo-confianza}
 calcular_ic <- function(datos, alpha) {
@@ -79,7 +93,7 @@ calcular_ic <- function(datos, alpha) {
 IC_KB <- calcular_ic(datos$KB, 0.05)
 ```
 
-El intervalo de confianza al 95\% para la media de la anchura de la cabeza (KB) es:
+El intervalo de confianza al 95\% para la media de la **anchura de la cabeza (KB)** es:
 \begin{center}
 $[\,`r sprintf("%.2f", IC_KB[1])`,\;`r sprintf("%.2f", IC_KB[2])`\,]$ mm
 \end{center}
@@ -89,32 +103,34 @@ Este primer cálculo del intervalo de confianza para el promedio de la anchura d
 $$
 IC = \overline{X} \pm t_{\frac{\alpha}{2},n-1}\cdot \left(\frac{s}{\sqrt{n}}\right) 
 $$
-\textbf{Interpretación}: Con un nivel de confianza del 95%, el promedio de la anchura de la cabeza de la \textbf{población} se encuentra en este intervalo obtenido
+\textbf{Interpretación}: Con un nivel de confianza del 95%, el promedio de la anchura de la cabeza de la \textbf{población} se encuentra en este intervalo obtenido.
 
 ```{r intervalo-confianza-EL}
 IC_EL <- calcular_ic(datos$EL, 0.05)
 ```
-El intervalo de confianza al 95\% para la media de la longitud de los élitros (EL) es:
+El intervalo de confianza al 95\% para la media de la **longitud de los élitros (EL)** es:
 \begin{center}
 $[\,`r sprintf("%.2f", IC_EL[1])`,\;`r sprintf("%.2f", IC_EL[2])`\,]$ mm
 \end{center}
 
 \textbf{Interpretación}: Con un nivel de confianza del 95%, el promedio de la longitud de los élitros de la \textbf{población} se encuentra en este intervalo obtenido. Es decir, si repitiéramos el procedimiento con muchas muestras distintas, en el 95% de las ocasiones aproximadamente la media poblacional estaría en este intervalo de confianza.
 
-### Pregunta 2.1 ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza según sexo?
+## Pregunta 2.1 ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza según sexo?
 
-Primero presentamos un resumen estadístico de la anchura de la cabeza para cada grupo (hembras y machos) con los datos de la muestra de 250 individuos
+Primero presentamos un resumen estadístico de la anchura de la cabeza para cada grupo (hembras y machos) con los datos de la muestra de 250 individuos.
 
 ```{r resumen-KB-sexo}
 with(datos, stby(KB, SEXO, descr, stats = "common", transpose = TRUE))
 ```
 
 Para poder responder esta pregunta tenemos que realizar un contraste de hipótesis para la igualdad de medias.
-\\\\
-Hipótesis nula ($H_0$): La media de KB es igual en ambos sexos
-Hipótesis alternativa ($H_a$): La media de KB es diferente entre los dos sexos
-\\\\
-Para ello hacemos un test t de de Student sobre la muestra de los machos y la muestra de las hembras. Concretamente haremos una prueba t de Welch, que se usa con dos muestras independientes cuando las varianzas no son iguales. Además, conviene su uso al ser las dos muestras de diferentes tamaños.
+
+  Hipótesis nula ($H_0$): La media de KB es igual en ambos sexos.
+  
+  Hipótesis alternativa ($H_a$): La media de KB es diferente entre los dos sexos.
+
+Para ello hacemos un test t de Student sobre la muestra de los machos y la muestra de las hembras. Concretamente haremos una prueba t de Welch, que se usa con dos muestras independientes cuando las varianzas no son iguales. Además, conviene su uso al ser las dos muestras de diferentes tamaños.
+
 
 ```{r contraste-KB-sexo}
 test_KB_sexo = t.test(KB ~ SEXO, data = datos, var.equal = FALSE)
@@ -152,6 +168,10 @@ tabla_kb |>
 
 AQUÍ HAY QUE SACAR CONCLUSIONES (ALGO DEL PALO : EXISTE DIFERENCIA SIGNIFICATIVA ENTRE LAS MEDIAS (P-VALOR < 0.001) DE LA ANCHURA DE LA CABEZA ENTRE MACHOS Y HEMBRAS. EL TAMAÑO DEL EFECTO ES MUY GRANDE (2.41), LO QUE INDICA DIMORFISMO SEXUAL MUY PRONUNCIADOL PARA MACHOS LA MEDIA DE KB ES... Y PARA HEMBRAS ES... (AL COMENTARLO ARRIBA CUANDO HACEMOS EL RESUMEN ESTADÍSTICO IGUAL ESTO ULTIMO DE LAS MEDIAS YA NO HACE FALTA AQUÍ))
 
+**Interpretación:** existe diferencia significativa entre las medias de la anchura de la cabeza entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto es muy grande, lo que indica dimorfismo sexual muy pronunciado. La media para machos es de 14.85mm y la de hembras 8.89mm.
+
+En el siguiente gráfico se puede observar claramente la diferencia entre sexos:
+
 ```{r boxplot-KB-sexo}
 #| fig.width: 7
 #| fig.height: 5
@@ -185,12 +205,12 @@ ggplot(datos, aes(x = SEXO, y = KB, fill = SEXO)) +
   )
 ```
 
-### PREGUNTA 2.2 ¿Existe diferencia estadísticamente significativa entre el promedio de la longitud de los élitros según sexo?
-Primero presentamos un resumen estadístico de la longitud de los élitros para cada grupo (hembras y machos) con los datos de la muestra de 250 individuos
+## Pregunta 2.2 ¿Existe diferencia estadísticamente significativa entre el promedio de la longitud de los élitros según sexo?
+Primero presentamos un resumen estadístico de la longitud de los élitros para cada grupo (hembras y machos) con los datos de la muestra de 250 individuos.
 ```{r resumen-EL-sexo}
 with(datos, stby(EL, SEXO, descr, stats = "common", transpose = TRUE))
 ```
-Para resolver esta pregunta seguimos exactamente el mismo procedimiento, haciendo el t test esta vez para la variable EL
+Para resolver esta pregunta seguimos exactamente el mismo procedimiento, haciendo el t test esta vez para la variable EL.
 ```{r contraste-EL-sexo}
 test_EL_sexo = t.test(EL ~ SEXO, data = datos, var.equal = FALSE)
 
@@ -225,7 +245,9 @@ tabla_el |>
   )
 ```
 
-CONCLUSIONES
+**Interpretación:** existe diferencia significativa entre las medias de la longitud de los élitros entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto no es tan grande como para la anchura de la cabeza, con lo cual no existe tanta diferencia como en la anterior pero si que hay diferencia.
+
+En el siguiente gráfico se puede observar la diferencia entre sexos:
 
 ```{r boxplot-EL-sexo}
 #| fig.width: 7
@@ -262,22 +284,23 @@ ggplot(datos, aes(x = SEXO, y = EL, fill = SEXO)) +
 
 AQUI NO HAY QUE DECIR NADA
 
-### PREGUNTA 3.1 ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza según si habitan en Cantabria o en Asturias?
+## Pregunta 3.1 ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza según si habitan en Cantabria o en Asturias?
 
-Primero presentamos un resumen estadístico de la anchura de la cabeza para cada procedencia geográfica con los datos de la muestra de 250 individuos
+Primero presentamos un resumen estadístico de la anchura de la cabeza para cada procedencia geográfica con los datos de la muestra de 250 individuos.
 
 ```{r resumen-KB-provincia}
 with(datos, stby(KB, PROVINCIA, descr, stats = "common", transpose = TRUE))
 ```
 
 Al igual que en el apartado anterior, para responder esta pregunta podríamos realizar un contraste de hipótesis para la igualdad de medias teniendo en cuenta solo el subconjunto de Asturias y de Cantabria.
-\\\\
-Hipótesis nula ($H_0$): La media de KB es igual en ambas provincias
-Hipótesis alternativa ($H_a$): La media de KB es diferente entre las dos provincias
-\\\\
-Para ello haríamos un test t de de Student, concretamente haremos una prueba t de Welch. No obstante, para ir algo más allá y ofrecer algún resultado adicional, podemos realizar un test ANOVA para entre otras cosas, poder obtener conclusiones sobre la pregunta planteada. Ahora el contraste es
-\\$H_0$: La media de la anchura de la cabeza los 3 grupos es igual
-\\$H_1$: Al menos una media es distinta
+
+  Hipótesis nula ($H_0$): La media de KB es igual en ambas provincias.
+  
+  Hipótesis alternativa ($H_a$): La media de KB es diferente entre las dos provincias.
+
+Para ello haríamos un test t de de Student, concretamente haremos una prueba t de Welch. No obstante, para ir algo más allá y ofrecer algún resultado adicional, podemos realizar un test ANOVA para entre otras cosas, poder obtener conclusiones sobre la pregunta planteada. Ahora el contraste es:
+  $H_0$: La media de la anchura de la cabeza los 3 grupos es igual.
+    $H_1$: Al menos una media es distinta.
 
 
 ```{r contraste-KB-provincia}
@@ -311,7 +334,7 @@ tabla_anova_KB |>
   )
 
 ```
-Una vez hecho el test ANOVA, podemos hacer la prueba Tukey HSD (post-hoc) para identificar los pares específicos cuyas medias difieren
+Una vez hecho el test ANOVA, podemos hacer la prueba Tukey HSD (post-hoc) para identificar los pares específicos cuyas medias difieren.
 ```{r comparacion-KB-pares}
 tuk <- TukeyHSD(anova_KB, which = "PROVINCIA")
 tuk_tab <- as.data.frame(tuk$PROVINCIA)
@@ -340,6 +363,7 @@ El p-valor que hemos obtenido en el análisis de varianza de un factor (ANOVA) e
 En consecuencia, no se detectan diferencias estadísticamente significativas en la
 anchura de la cabeza entre las tres procedencias geográficas
 (Asturias, Cantabria y Otras). Además, los resultados del análisis de comparaciones múltiples nos permiten ver que particularmente tampoco hay diferencias de medias estadísticamente significativas entre \textbf{Asturias y Cantabria}, lo que refuerza la conclusión anterior.
+
 
 ```{r boxplot-KB-provincia}
 #| fig.width: 7
@@ -374,16 +398,15 @@ ggplot(datos, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
   )
 ```
 
-### Pregunta 3.2 ¿Existe diferencia estadísticamente significativa entre la longitud de los élitros según si habitan en Cantabria o en Asturias?
+## Pregunta 3.2 ¿Existe diferencia estadísticamente significativa entre la longitud de los élitros según si habitan en Cantabria o en Asturias?
 
-
-Primero presentamos un resumen estadístico de la longitud de los élitros para cada procedencia geográfica con los datos de la muestra de 250 individuos
+Primero presentamos un resumen estadístico de la longitud de los élitros para cada procedencia geográfica con los datos de la muestra de 250 individuos.
 
 ```{r resumen-EL-provincia}
 with(datos, stby(KB, PROVINCIA, descr, stats = "common", transpose = TRUE))
 ```
 
-De nuevo, hacemos un test ANOVA y un análisis post hoc de Tukey para confirmar el resultado, esta vez para la variable EL
+De nuevo, hacemos un test ANOVA y un análisis post hoc de Tukey para confirmar el resultado, esta vez para la variable EL.
 
 
 ```{r contraste-EL-provincia}
@@ -446,7 +469,7 @@ De nuevo, el análisis de varianza de un factor no muestra diferencias estadíst
 significativas en la longitud de los élitros entre las procedencias geográficas
 ($p = 0.250791$). El análisis post hoc de Tukey confirma el resultado, ya que
 ninguna de las comparaciones por pares presenta un p-valor ajustado inferior a
-$0.05$, incluyendo la comparación entre \textbf{Asturias y Cantabria}
+$0.05$, incluyendo la comparación entre \textbf{Asturias y Cantabria}.
 
 
 ```{r boxplot-EL-provincia}
@@ -483,3 +506,19 @@ ggplot(datos, aes(x = PROVINCIA, y = EL, fill = PROVINCIA)) +
 ```
 
 ## Pregunta 4. Suponiendo que la muestra es representativa de la población, ¿los hábitats son igual de numerosos en Cantabria y Asturias?, ¿y en términos de sexo?
+
+\newpage 
+# Resumen de resultados y conclusiones
+
+PARA EL RESUMEN DE RESULTADOS HACER UNA TABLA CON LA PREGUNTA EN PLAN (2.1 KB Y SEXO), estadistico t, ... , EL P VALOR Y EL RESULTADO.
+
+**Conclusiones**
+Dimorfismo sexual pronunciado:
+Ausencia de variación geográfica:
+Patrones alométricos diferenciados:
+Implicaciones evolutivas:
+
+IMPORTANTE COMPARAR CON PRACTICA 1
+
+\newpage 
+# Anexo: Código R
