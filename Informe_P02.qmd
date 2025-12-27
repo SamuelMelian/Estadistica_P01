@@ -67,13 +67,14 @@ El objetivo del estudio es responder a las siguentes preguntas:
 
 Y concluiremos comparando las respuestas obtenidas con las conclusiones de la primera práctica de estadística descriptiva. Comprobaremos, utilizando técnicas de inferencia si dichas conclusiones son estadísticamente significativas o sólo responden al azar.
 
-\newpage 
 # Metodología
-Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos (dado que eliminamos los 15 con origen desconocido), en lugar de seleccionar una muestra aleatoria como se hizo en la práctica 1.
 
-PREGUNTAS 1-3
+Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos. Excluiremos aquellos cuyo origen es desconocido. Esto supone un cambio en relación con la práctica anterior, en la que se empleaba una muestra aleatoria.
 
-Para resolver la pregunta 4 tomaremos los datos de la población en cuanto a provincia y sexo. Y calculamos y representaremos el porcentaje de individuos en dos gráficos que muestran estas distribuciones.
+Para resolver las preguntas 1, 2 y 3 emplearemos la distribución t de Student para estimar los intervalos de confianza y ver cuál es la tendencia central, así como la dispersión de las variables de estudio. Emplearemos esta prueba para discernir si las diferencias encontradas, entre machos y hembras y segun la procedencia, son aleatorias o si, por el contrario, tienen una relevancia estadística. 
+
+Finalmente, para resolver la pregunta 4 tomaremos los datos de la población en cuanto a provincia y sexo. Se calculará y representará el porcentaje de individuos en dos gráficos que muestren estas distribuciones. El análisis de la varianza (ANOVA) nos permitirá comparar los grupos, y de nuevo observar las diferencias que presentan.
+
 
 
 \newpage
@@ -123,7 +124,25 @@ $[\,`r sprintf("%.2f", IC_EL[1])`,\;`r sprintf("%.2f", IC_EL[2])`\,]$ mm
 Primero presentamos un resumen estadístico de la anchura de la cabeza para cada grupo (hembras y machos) con los datos de la muestra de 250 individuos.
 
 ```{r resumen-KB-sexo}
-with(datos, stby(KB, SEXO, descr, stats = "common", transpose = TRUE))
+datos %>%
+  group_by(SEXO) %>%
+  summarise(
+    N_valid = sum(!is.na(KB)),
+    Pct_valid = N_valid / n() * 100,
+    Media = mean(KB, na.rm = TRUE),
+    Mediana = median(KB, na.rm = TRUE),
+    SD = sd(KB, na.rm = TRUE),
+    Min = min(KB, na.rm = TRUE),
+    Max = max(KB, na.rm = TRUE)
+  ) %>%
+  kable(
+    caption = "Resumen estadístico de la anchura de la cabeza (KB) según sexo",
+    digits = 3,
+    booktabs = TRUE
+  ) %>%
+  kable_styling(
+    latex_options = c("hold_position", "striped")
+  )
 ```
 
 Para poder responder esta pregunta tenemos que realizar un contraste de hipótesis para la igualdad de medias.
@@ -134,7 +153,6 @@ Para poder responder esta pregunta tenemos que realizar un contraste de hipótes
 
 Para ello hacemos un test t de Student sobre la muestra de los machos y la muestra de las hembras. Concretamente haremos una prueba t de Welch, que se usa con dos muestras independientes cuando las varianzas no son iguales. Además, conviene su uso al ser las dos muestras de diferentes tamaños.
 
-LA TABLA A CONTINUACIÓN SE ESCAPA DE LA PAGINA; ¿PONERLA EN VERTICAL?
 ```{r contraste-KB-sexo}
 test_KB_sexo = t.test(KB ~ SEXO, data = datos, var.equal = FALSE)
 
@@ -148,28 +166,26 @@ tabla_kb <- data.frame(
   IC_inf = test_KB_sexo$conf.int[1],
   IC_sup = test_KB_sexo$conf.int[2]
 )
-tabla_kb |>
+tabla_kb[, 1:3] |>
   kable(
-    col.names = c(
-      "Estadístico t",
-      "Grados de libertad",
-      "p-Valor",
-      "Tamaño del efecto (d de Cohen)",
-      "Intervalo de confianza al 95% (inf)",
-      "Intervalo de confianza al 95% (sup)"
-    ),
-    caption = "Test t de medias para KB por sexos",
+    col.names = c("Estadístico t", "Grados de libertad", "p-Valor"),
+    caption = "Test t de medias para KB por sexos (Parte 1)",
     digits = 6,
     booktabs = TRUE,
     align = "c"
   ) |>
-  kable_styling(
-    latex_options = c("hold_position","striped"),
-    font_size = 10
-  )
-```
+  kable_styling(latex_options = c("hold_position","striped"), font_size = 9)
 
-AQUÍ HAY QUE SACAR CONCLUSIONES (ALGO DEL PALO : EXISTE DIFERENCIA SIGNIFICATIVA ENTRE LAS MEDIAS (P-VALOR < 0.001) DE LA ANCHURA DE LA CABEZA ENTRE MACHOS Y HEMBRAS. EL TAMAÑO DEL EFECTO ES MUY GRANDE (2.41), LO QUE INDICA DIMORFISMO SEXUAL MUY PRONUNCIADOL PARA MACHOS LA MEDIA DE KB ES... Y PARA HEMBRAS ES... (AL COMENTARLO ARRIBA CUANDO HACEMOS EL RESUMEN ESTADÍSTICO IGUAL ESTO ULTIMO DE LAS MEDIAS YA NO HACE FALTA AQUÍ))
+tabla_kb[, 4:6] |>
+  kable(
+    col.names = c("Tamaño del efecto (d de Cohen)", "IC 95% (inf)", "IC 95% (sup)"),
+    caption = "Test t de medias para KB por sexos (Parte 2)",
+    digits = 6,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(latex_options = c("hold_position","striped"), font_size = 9)
+```
 
 **Interpretación:** existe diferencia significativa entre las medias de la anchura de la cabeza entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto es muy grande, lo que indica dimorfismo sexual muy pronunciado. La media para machos es de 14.85mm y la de hembras 8.89mm.
 
@@ -211,11 +227,27 @@ ggplot(datos, aes(x = SEXO, y = KB, fill = SEXO)) +
 ## Pregunta 2.2 ¿Existe diferencia estadísticamente significativa entre el promedio de la longitud de los élitros según sexo?
 Primero presentamos un resumen estadístico de la longitud de los élitros para cada grupo (hembras y machos) con los datos de la muestra de 250 individuos.
 ```{r resumen-EL-sexo}
-with(datos, stby(EL, SEXO, descr, stats = "common", transpose = TRUE))
+datos %>%
+  group_by(SEXO) %>%
+  summarise(
+    N_valid = sum(!is.na(EL)),
+    Pct_valid = N_valid / n() * 100,
+    Media = mean(EL, na.rm = TRUE),
+    Mediana = median(EL, na.rm = TRUE),
+    SD = sd(EL, na.rm = TRUE),
+    Min = min(EL, na.rm = TRUE),
+    Max = max(EL, na.rm = TRUE)
+  ) %>%
+  kable(
+    caption = "Resumen estadístico de la longitud de los élitros (EL) según sexo",
+    digits = 2,
+    booktabs = TRUE
+  ) %>%
+  kable_styling(
+    latex_options = c("hold_position", "striped")
+  )
 ```
 Para resolver esta pregunta seguimos exactamente el mismo procedimiento, haciendo el t test esta vez para la variable EL.
-
-LA TABLA A CONTINUACIÓN SE ESCAPA DE LA PAGINA; ¿PONERLA EN VERTICAL?
 
 ```{r contraste-EL-sexo}
 test_EL_sexo = t.test(EL ~ SEXO, data = datos, var.equal = FALSE)
@@ -230,25 +262,27 @@ tabla_el <- data.frame(
   IC_inf = test_EL_sexo$conf.int[1],
   IC_sup = test_EL_sexo$conf.int[2]
 )
-tabla_el |>
+# Primera mitad
+tabla_el[, 1:3] |>
   kable(
-    col.names = c(
-      "Estadístico t",
-      "Grados de libertad",
-      "p-Valor",
-      "Tamaño del efecto (d de Cohen)",
-      "Intervalo de confianza al 95% (inf)",
-      "Intervalo de confianza al 95% (sup)"
-    ),
-    caption = "Test t de medias para EL por sexos",
+    col.names = c("Estadístico t", "Grados de libertad", "p-Valor"),
+    caption = "Test t de medias para EL por sexos (Parte 1)",
     digits = 6,
     booktabs = TRUE,
     align = "c"
   ) |>
-  kable_styling(
-    latex_options = c("hold_position","striped"),
-    font_size = 10
-  )
+  kable_styling(latex_options = c("hold_position","striped"), font_size = 8)
+
+# Segunda mitad
+tabla_el[, 4:6] |>
+  kable(
+    col.names = c("Tamaño del efecto (d de Cohen)", "IC 95% (inf)", "IC 95% (sup)"),
+    caption = "Test t de medias para EL por sexos (Parte 2)",
+    digits = 6,
+    booktabs = TRUE,
+    align = "c"
+  ) |>
+  kable_styling(latex_options = c("hold_position","striped"), font_size = 8)
 ```
 
 **Interpretación:** existe diferencia significativa entre las medias de la longitud de los élitros entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto no es tan grande como para la anchura de la cabeza, con lo cual no existe tanta diferencia como en la anterior pero si que hay diferencia.
@@ -288,14 +322,30 @@ ggplot(datos, aes(x = SEXO, y = EL, fill = SEXO)) +
   )
 ```
 
-AQUI NO HAY QUE DECIR NADA
-
 ## Pregunta 3.1 ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza según si habitan en Cantabria o en Asturias?
 
 Primero presentamos un resumen estadístico de la anchura de la cabeza para cada procedencia geográfica con los datos de la muestra de 250 individuos.
 
 ```{r resumen-KB-provincia}
-with(datos, stby(KB, PROVINCIA, descr, stats = "common", transpose = TRUE))
+datos %>%
+  group_by(PROVINCIA) %>%
+  summarise(
+    N_valid = sum(!is.na(KB)),
+    Pct_valid = N_valid / n() * 100,
+    Media = mean(KB, na.rm = TRUE),
+    Mediana = median(KB, na.rm = TRUE),
+    SD = sd(KB, na.rm = TRUE),
+    Min = min(KB, na.rm = TRUE),
+    Max = max(KB, na.rm = TRUE)
+  ) %>%
+  kable(
+    caption = "Resumen estadístico de la anchura de la cabeza (KB) según provincia",
+    digits = 2,
+    booktabs = TRUE
+  ) %>%
+  kable_styling(
+    latex_options = c("hold_position", "striped")
+  )
 ```
 
 Al igual que en el apartado anterior, para responder esta pregunta podríamos realizar un contraste de hipótesis para la igualdad de medias teniendo en cuenta solo el subconjunto de Asturias y de Cantabria.
@@ -366,9 +416,10 @@ tuk_tab |>
 ```
 El p-valor que hemos obtenido en el análisis de varianza de un factor (ANOVA) es elevado
 ($p = 0.265699$), por lo que no se rechaza la hipótesis nula de igualdad de medias.
-En consecuencia, no se detectan diferencias estadísticamente significativas en la
-anchura de la cabeza entre las tres procedencias geográficas
-(Asturias, Cantabria y Otras). Además, los resultados del análisis de comparaciones múltiples nos permiten ver que particularmente tampoco hay diferencias de medias estadísticamente significativas entre \textbf{Asturias y Cantabria}, lo que refuerza la conclusión anterior.
+
+En consecuencia, no se detectan diferencias estadísticamente significativas en la anchura de la cabeza entre las tres procedencias geográficas (Asturias, Cantabria y Otras). 
+
+Además, los resultados del análisis de comparaciones múltiples nos permiten ver que particularmente tampoco hay diferencias de medias estadísticamente significativas entre \textbf{Asturias y Cantabria}, lo que refuerza la conclusión anterior.
 
 
 ```{r boxplot-KB-provincia}
@@ -409,7 +460,25 @@ ggplot(datos, aes(x = PROVINCIA, y = KB, fill = PROVINCIA)) +
 Primero presentamos un resumen estadístico de la longitud de los élitros para cada procedencia geográfica con los datos de la muestra de 250 individuos.
 
 ```{r resumen-EL-provincia}
-with(datos, stby(KB, PROVINCIA, descr, stats = "common", transpose = TRUE))
+datos %>%
+  group_by(PROVINCIA) %>%
+  summarise(
+    N_valid = sum(!is.na(EL)),
+    Pct_valid = N_valid / n() * 100,
+    Media = mean(EL, na.rm = TRUE),
+    Mediana = median(EL, na.rm = TRUE),
+    SD = sd(EL, na.rm = TRUE),
+    Min = min(EL, na.rm = TRUE),
+    Max = max(EL, na.rm = TRUE)
+  ) %>%
+  kable(
+    caption = "Resumen estadístico de la longitud de los élitros (EL) según provincia",
+    digits = 2,
+    booktabs = TRUE
+  ) %>%
+  kable_styling(
+    latex_options = c("hold_position", "striped")
+  )
 ```
 
 De nuevo, hacemos un test ANOVA y un análisis post hoc de Tukey para confirmar el resultado, esta vez para la variable EL.
