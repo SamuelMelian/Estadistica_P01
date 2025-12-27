@@ -53,13 +53,10 @@ datos$SEXO <- factor(datos$SEXO, levels = c("hembra", "macho"))
 datos$PROVINCIA <- factor(datos$PROVINCIA, levels = c("Asturias", "Cantabria", "Otras"))
 
 datos <- datos |> dplyr::filter(!is.na(PROVINCIA))
-summary(datos)
 ```
 \newpage 
 # Objetivo del estudio
 Continuaremos el estudio de datos biométricos del **ciervo volante** (*Lucanus cervus*) estudiando los valores de anchura de cabeza (KB) y longitud de los élitros (EL), y sus diferencias dependiendo de su sexo y procedencia.
-
-En base a las conclusiones obtenidas en la primera práctica de estadística descriptiva, comprobaremos, utilizando técnicas de inferencia si dichas conclusiones son estadísticamente significativas o sólo responden al azar.
 
 El objetivo del estudio es responder a las siguentes preguntas:
 
@@ -68,10 +65,16 @@ El objetivo del estudio es responder a las siguentes preguntas:
 3. ¿Existe diferencia estadísticamente significativa entre el promedio de la anchura de la cabeza y la longitud de los élitros según si habitan en Cantabria o en Asturias?
 4. Suponiendo que la muestra es representativa de la población, ¿los hábitats son igual de numerosos en Cantabria y Asturias?, ¿y en términos de sexo?
 
+Y concluiremos comparando las respuestas obtenidas con las conclusiones de la primera práctica de estadística descriptiva. Comprobaremos, utilizando técnicas de inferencia si dichas conclusiones son estadísticamente significativas o sólo responden al azar.
 
 \newpage 
 # Metodología
 Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos (dado que eliminamos los 15 con origen desconocido), en lugar de seleccionar una muestra aleatoria como se hizo en la práctica 1.
+
+PREGUNTAS 1-3
+
+Para resolver la pregunta 4 tomaremos los datos de la población en cuanto a provincia y sexo. Y calculamos y representaremos el porcentaje de individuos en dos gráficos que muestran estas distribuciones.
+
 
 \newpage
 # Análisis de resultados
@@ -131,7 +134,7 @@ Para poder responder esta pregunta tenemos que realizar un contraste de hipótes
 
 Para ello hacemos un test t de Student sobre la muestra de los machos y la muestra de las hembras. Concretamente haremos una prueba t de Welch, que se usa con dos muestras independientes cuando las varianzas no son iguales. Además, conviene su uso al ser las dos muestras de diferentes tamaños.
 
-
+LA TABLA A CONTINUACIÓN SE ESCAPA DE LA PAGINA; ¿PONERLA EN VERTICAL?
 ```{r contraste-KB-sexo}
 test_KB_sexo = t.test(KB ~ SEXO, data = datos, var.equal = FALSE)
 
@@ -211,6 +214,9 @@ Primero presentamos un resumen estadístico de la longitud de los élitros para 
 with(datos, stby(EL, SEXO, descr, stats = "common", transpose = TRUE))
 ```
 Para resolver esta pregunta seguimos exactamente el mismo procedimiento, haciendo el t test esta vez para la variable EL.
+
+LA TABLA A CONTINUACIÓN SE ESCAPA DE LA PAGINA; ¿PONERLA EN VERTICAL?
+
 ```{r contraste-EL-sexo}
 test_EL_sexo = t.test(EL ~ SEXO, data = datos, var.equal = FALSE)
 
@@ -507,6 +513,40 @@ ggplot(datos, aes(x = PROVINCIA, y = EL, fill = PROVINCIA)) +
 
 ## Pregunta 4. Suponiendo que la muestra es representativa de la población, ¿los hábitats son igual de numerosos en Cantabria y Asturias?, ¿y en términos de sexo?
 
+Presentamos a continuación los dos gráficos que representan el porcentaje de individuos de cada provincia y de cada sexo:
+
+```{r grafico-provincias}
+datos |>
+  count(PROVINCIA) |>
+   mutate(porcentaje = n / sum(n) * 100) |>
+  ggplot(aes(x = PROVINCIA, y = porcentaje)) +
+  geom_col()+
+  labs(
+    title = "Distribución porcentual por provincia",
+    x = "Provincia",
+    y = "Porcentaje (%)"
+  ) + scale_y_continuous(limits = c(0, 100))
+
+```
+
+```{r grafico-sexo}
+datos |>
+  count(SEXO) |>
+   mutate(porcentaje = n / sum(n) * 100) |>
+  ggplot(aes(x = SEXO, y = porcentaje)) +
+  geom_col() +
+  labs(
+    title = "Distribución porcentual por sexo",
+    x = "Sexo",
+    y = "Porcentaje (%)"
+  )+ scale_y_continuous(limits = c(0, 100))
+
+```
+
+**Interpretación:** en cuanto a la distribución geográfica de la **población** podemos observar que la mayoría de registros provienen de Asturias (un 72\%), mientras que Cantabria aporta el 11,2\% y el 16,8\% restante pertenece a otras provincias. Considerando que la muestra es representativa, se observa que Asturias concentra una mayor proporción de registros que Cantabria, luego los hábitats no son igualmente numerosos.
+
+Respecto al sexo de los individuos, se observa una distribución relativamente equilibrada, con ligera predominancia de los machos con un 52,8\% frente al 47,2\% de las hembras.
+
 \newpage 
 # Resumen de resultados y conclusiones
 
@@ -515,10 +555,14 @@ PARA EL RESUMEN DE RESULTADOS HACER UNA TABLA CON LA PREGUNTA EN PLAN (2.1 KB Y 
 **Conclusiones**
 Dimorfismo sexual pronunciado:
 Ausencia de variación geográfica:
-Patrones alométricos diferenciados:
-Implicaciones evolutivas:
 
 IMPORTANTE COMPARAR CON PRACTICA 1
+ENL LA PRACTICA UNO HALLAMOS LA MEDIA DE KB EN LA MUESTRA ERA 12,14, ESTA DENTRO DEL INTERVALO DE CONFIANZA HALLADO EN LA PREGUNTA 1
+EN AMBAS PRACTICAS SE VE EL MARCADO DIMORFISMO SEXUAL EN CUANTO AL TAMAÑO DE LA ANCHURA DE LA CABEZA, ADEMAS EN ESTA ESTUDIAMOS LA LONGITUD DE LOS ELITROS Y DECIR SI HAY O NO DIMORFISMO
+PREGUNTA 3: EN AMBAS PRACTICAS CONCLUIMOS QUE NO SE ENCUENTRA DIFERENCIAS SEGUN PROCEDENCIA
+PREGUTA 4: YA HABIAMOS VISTO QUE EN LA MUESTRA LA MAYOR PARTE DE INDIVIDUOS SON DE ASTURIAS, CONFIRMAMOS CON LO HALLADO EN LA PREGUNTA 4 ¿LA MUESTRA QUE TOMAMOS EN LA PRIMERA PRACTICA GUARDA LOS PORCENTAJES DEL TOTAL, ES DECIR, ES REPRESENTAIVA COMO DECIAMOS? SI
 
 \newpage 
 # Anexo: Código R
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```
