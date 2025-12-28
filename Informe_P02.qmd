@@ -75,7 +75,7 @@ Para resolver las preguntas 1, 2 y 3 se estimaran los intervalos de confianza. S
 
 Asimismo, el factor geográfico será medido empleando un análisis de la varianza ANOVA para comparar los grupos. Además, la prueba Tukey HSD nos proporcionará una mejor comparación entre los pares.
 
-Finalmente, para resolver la pregunta 4 tomaremos los datos de la población en cuanto a provincia y sexo. Se calculará y representará el porcentaje de individuos en dos gráficos que muestren estas distribuciones, y sus resultados nos ofreceran una mejor percepción de la fiabilidade de aquellos obtenidos en la Práctica 1.
+Finalmente, para resolver la pregunta 4 tomaremos los datos de la población en cuanto a provincia y sexo. Se calculará y representará el porcentaje de individuos en dos gráficos que muestren estas distribuciones, y sus resultados nos ofrecerán una mejor percepción de la fiabilidad de aquellos obtenidos en la Práctica 1.
 
 Se incluirán tablas a modo de resumen con los resultados de los análisis ya realizados previamente sobre las variables.
 
@@ -191,7 +191,7 @@ tabla_kb[, 4:6] |>
   kable_styling(latex_options = c("hold_position","striped"), font_size = 9)
 ```
 
-**Interpretación:** existe diferencia significativa entre las medias de la anchura de la cabeza entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto es muy grande, lo que indica dimorfismo sexual muy pronunciado. La media para machos es de 14.85mm y la de hembras 8.89mm.
+**Interpretación:** Existe una diferencia significativa entre las medias de la anchura de la cabeza entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto es muy grande, lo que indica dimorfismo sexual muy pronunciado. La media para machos es de 14.85mm y la de hembras 8.89mm.
 
 En el siguiente gráfico se puede observar claramente la diferencia entre sexos:
 
@@ -275,7 +275,7 @@ tabla_el[, 1:3] |>
     booktabs = TRUE,
     align = "c"
   ) |>
-  kable_styling(latex_options = c("hold_position","striped"), font_size = 8)
+  kable_styling(latex_options = c("hold_position","striped"), font_size = 9)
 
 # Segunda mitad
 tabla_el[, 4:6] |>
@@ -286,10 +286,10 @@ tabla_el[, 4:6] |>
     booktabs = TRUE,
     align = "c"
   ) |>
-  kable_styling(latex_options = c("hold_position","striped"), font_size = 8)
+  kable_styling(latex_options = c("hold_position","striped"), font_size = 9)
 ```
 
-**Interpretación:** existe diferencia significativa entre las medias de la longitud de los élitros entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto no es tan grande como para la anchura de la cabeza, con lo cual no existe tanta diferencia como en la anterior pero sí que hay diferencia.
+**Interpretación:** Existe una diferencia significativa entre las medias de la longitud de los élitros entre machos y hembras, el p-Valor es <0.001. El tamaño del efecto no es tan grande como para la anchura de la cabeza, con lo cual no existe tanta diferencia como en la anterior pero sí que hay diferencia.
 
 En el siguiente gráfico se puede observar la diferencia entre sexos:
 
@@ -392,7 +392,7 @@ tabla_anova_KB |>
   ) |>
   kable_styling(
     latex_options = c("hold_position","striped"),
-    font_size = 10
+    font_size = 9
   )
 
 ```
@@ -420,7 +420,7 @@ tuk_tab |>
   )
 
 ```
-El p-valor que hemos obtenido en el análisis de varianza de un factor (ANOVA) es elevado
+El p-Valor que hemos obtenido en el análisis de varianza de un factor (ANOVA) es elevado
 ($p = 0.265699$), por lo que no se rechaza la hipótesis nula de igualdad de medias.
 
 En consecuencia, no se detectan diferencias estadísticamente significativas en la anchura de la cabeza entre las tres procedencias geográficas (Asturias, Cantabria y Otras). 
@@ -519,7 +519,7 @@ tabla_anova_EL |>
   ) |>
   kable_styling(
     latex_options = c("hold_position","striped"),
-    font_size = 10
+    font_size = 9
   )
 
 ```
@@ -620,7 +620,7 @@ datos |>
 
 ```
 
-**Interpretación:** en cuanto a la distribución geográfica de la **población** podemos observar que la mayoría de registros provienen de Asturias (un 72\%), mientras que Cantabria aporta el 11,2\% y el 16,8\% restante pertenece a otras provincias. Considerando que la muestra es representativa, se observa que Asturias concentra una mayor proporción de registros que Cantabria, luego los hábitats no son igualmente numerosos.
+**Interpretación:** En cuanto a la distribución geográfica de la **población** podemos observar que la mayoría de registros provienen de Asturias, un 72\%, mientras que Cantabria aporta el 11,2\% y el 16,8\% restante pertenece a otras provincias. Considerando que la muestra es representativa, se observa que Asturias concentra una mayor proporción de registros que Cantabria, luego los hábitats no son igualmente numerosos.
 
 Respecto al sexo de los individuos, se observa una distribución relativamente equilibrada, con ligera predominancia de los machos con un 52,8\% frente al 47,2\% de las hembras.
 
@@ -674,11 +674,11 @@ tabla_resumen |>
   )
 ```
 
-En la tabla anterior podemos ver un resumen de los test que hemos llevado a cabo, así como una rápida interpretación de lo que nos indican. 
+En la tabla anterior podemos ver un resumen de los test que hemos llevado a cabo, así como una rápida interpretación de lo que nos muestran. 
 
-En los análisis por sexo de ambas variables, KB y EL, observamos un resultado con un \textit{p} valor tal que $p<0.001$ empleando el análisis de \textit{t} de Student. Esto indica una fuerte evidencia de la existencia de diferencias reales entre machos y hembras, y se puede concluir que existen dichas diferencias, y que ha sido comprobado estadísticamente.
+En los análisis por sexo de ambas variables, KB y EL, observamos un resultado con un p-Valor tal que $p<0.001$ empleando el análisis de \textit{t} de Student. Esto indica una fuerte evidencia de la existencia de diferencias reales entre machos y hembras, y se puede concluir que existen dichas diferencias, y que ha sido comprobado estadísticamente.
 
-Por otro lado, para el test ANOVA en ambas variables, se han obtenido unos \textit{p} valores de entre $0.20$ y $0.27$. Dada la interpretación de que las diferencias se pueden dar por azar hasta en un 27\% de los casos, no podemos obtener una conclusión tan obvia. Se trata de un valor demasiado alto, por lo que no podemos asegurar que estas diferencias se deban al origen de los ejemplares por provincias.
+Por otro lado, para el test ANOVA en ambas variables, se han obtenido unos p-Valores de entre $0.20$ y $0.27$. Dada la interpretación de que las diferencias se pueden dar por azar hasta en un 27\% de los casos, no podemos obtener una conclusión tan obvia. Se trata de un valor demasiado alto, por lo que no podemos asegurar que estas diferencias se deban al origen de los ejemplares por provincias.
 
 **Conclusiones**
 
@@ -690,9 +690,9 @@ En el caso de la variable Longitud de los élitros (EL), no se realizó en la Pr
 
 A continuación, gracias a los resultados de los análisis de la pregunta 2, podemos confirmar un dimorfismo sexual muy acentuado. Para ambas variables se concluye que los machos poseen valores mayores, de media, en relación con las hembras. Así, se confirma que estos tendrán una mayor anchura de la cabeza y mayor longitud de sus élitros debido a su sexo. Esto también es algo que se había observado e la práctica anterior, y que queda de nuevo confirmado.
 
-Tomando ahora el sesgo geográfico, recordemos que no obtuvimos conclusiones claras en el análisis descriptivo, pues las diferencias no eran significativas. En este nuevo análisis los \textit{p} valores de la tabla tampoco indican una evidencia clara de la influencia del factor geográfico en las diferencias morfológicas que presentan los ejemplares. El análisis de la varianza y las comparaciones realizadas indican que las diferencias entre provincias podrían ser debidas al azar hasta en un 27\% de los casos, lo cual indica una morfología homogénea de los ejemplares en todas las provincias estudiadas.
+Tomando ahora el sesgo geográfico, recordemos que no obtuvimos conclusiones claras en el análisis descriptivo, pues las diferencias no eran significativas. En este nuevo análisis los p-Valores de la tabla tampoco indican una evidencia clara de la influencia del factor geográfico en las diferencias morfológicas que presentan los ejemplares. El análisis de la varianza y las comparaciones realizadas indican que las diferencias entre provincias podrían ser debidas al azar hasta en un 27\% de los casos, lo cual indica una morfología homogénea de los ejemplares en todas las provincias estudiadas.
 
-En la última parte de esta práctica, la pregunta 4, se buscaba confirmar si existían diferencias en términos de número de ejemplares según el sexo y la provincia. Los resultados confirman que existe una ligera predominancia de ejemplares machos sobre los ejemplares hembras. Además, se tiene un mayor número de ejemplares de Asturias, seguidos de los procedentes de otros lugares, siendo los menos numerosos los venidos de cantabria. Luego la distribución por sexo es sifucientemente equitativa, pero la distribución geográfica sí presenta diferencias más relevantes.
+En la última parte de esta práctica, la pregunta 4, se buscaba confirmar si existían diferencias en términos del número de ejemplares según el sexo y la provincia. Los resultados confirman que existe una ligera predominancia de ejemplares machos sobre los ejemplares hembras. Además, se tiene un mayor número de ejemplares de Asturias, seguidos de los procedentes de otros lugares, siendo los menos numerosos los venidos de cantabria. Luego la distribución por sexo es sifucientemente equitativa, pero la distribución geográfica sí presenta diferencias más relevantes. Cabe destacar que estas conclusiones son una reiteración de lo observado en la práctica anterior, si tomamos la muestra aleatoria seleccionada como una buena representación de la población total.
 
 En conclusión, los resultados obtenidos empleando inferencia estadística confirman aquellos obtenidos en el análisis descriptivo. Las variaciones morfológicas observadas en la especie de estudio se pueden explicar debido al factor sexual, y sin embargo no podemos dar una conclusión acerca de la infuencia del factor geográfico, que no parece tener un efecto significativo. Esto demuestra una validez en el estudio realizado entre ambas prácticas, y confirma que se han obtenido resultados robustos en torno a la población de estudio.
 
