@@ -596,7 +596,7 @@ Hipótesis nula ($H_0$): Asturias y Cantabria están igualmente representadas en
   
   Hipótesis alternativa ($H_a$): Asturias y Cantabria no están igualmente representadas en la población (es decir, $p_{Asturias}\neq p_{Cantabria}$)
 
-```{r}
+```{r test-provincia}
 datos_AC <- datos |>
   dplyr::filter(PROVINCIA %in% c("Asturias", "Cantabria"))
 
@@ -622,6 +622,8 @@ knitr::kable(
   booktabs = TRUE,
   align = "c"
 )
+
+test_provincia <- ic_habitat
 ```
 
 
@@ -630,7 +632,7 @@ knitr::kable(
 Para responder a la segunda pregunta y ver si son igual de numerosos en términos de sexo, podemos de nuevo realizar un test de contraste de proporciones, esta vez para el sexo.
 
 
-```{r}
+```{r test-sexo}
 tabla_habitat <- table(datos$SEXO)
 
 ic_habitat <- prop.test(
@@ -653,6 +655,7 @@ knitr::kable(
   booktabs = TRUE,
   align = "c"
 )
+test_sexo <- ic_habitat
 
 ```
 
@@ -699,35 +702,49 @@ tabla_resumen <- data.frame(
     "KB (por sexo)",
     "KB (por provincia)",
     "EL (por sexo)",
-    "EL (por provincia)"
+    "EL (por provincia)",
+    "Contraste (provincia)",
+    "Contraste (sexo)"
   ),
 
   Test = c(
     "t de Student",
     "ANOVA",
     "t de Student",
-    "ANOVA"
+    "ANOVA",
+    "Test de proporciones",
+    "Test de proporciones"
   ),
 
   Estadistico = c(
     paste0("t = ", round(unname(test_KB_sexo$statistic), 3)),
     paste0("F = ", round(summary(anova_KB)[[1]]$`F value`[1], 3)),
     paste0("t = ", round(unname(test_EL_sexo$statistic), 3)),
-    paste0("F = ", round(summary(anova_EL)[[1]]$`F value`[1], 3))
+    paste0("F = ", round(summary(anova_EL)[[1]]$`F value`[1], 3)),
+    paste0("Chi-cuadrado = ", round(test_provincia$statistic, 3)),
+    paste0("Chi-cuadrado = ", round(test_sexo$statistic, 3))
   ),
 
   `p-valor` = c(
     signif(test_KB_sexo$p.value, 8),
     signif(summary(anova_KB)[[1]]$`Pr(>F)`[1], 3),
     signif(test_EL_sexo$p.value, 8),
-    signif(summary(anova_EL)[[1]]$`Pr(>F)`[1], 3)
+    signif(summary(anova_EL)[[1]]$`Pr(>F)`[1], 3),
+    signif(test_provincia$p.value, 3),
+    signif(test_sexo$p.value, 3)
   ),
 
   Resultado = c(
-    "Concluyente", "Alto, no concluyente", "Concluyente", "Alto, no concluyente"
+    "Concluyente", 
+    "Alto, no concluyente", 
+    "Concluyente", 
+    "Alto, no concluyente",
+    "Concluyente",  
+    "Alto, no concluyente"  
   )
 )
 
+# Mostrar tabla
 tabla_resumen |>
   kable(
     caption = "Resumen de los análisis estadísticos realizados",
@@ -745,6 +762,8 @@ En la tabla anterior podemos ver un resumen de los test que hemos llevado a cabo
 En los análisis por sexo de ambas variables, KB y EL, observamos un resultado con un p-Valor tal que $p<0.001$ empleando el análisis de \textit{t} de Student. Esto indica una fuerte evidencia de la existencia de diferencias reales entre machos y hembras, y se puede concluir que existen dichas diferencias, y que ha sido comprobado estadísticamente.
 
 Por otro lado, para el test ANOVA en ambas variables, se han obtenido unos p-Valores de entre $0.20$ y $0.27$. Dada la interpretación de que las diferencias se pueden dar por azar hasta en un 27\% de los casos, no podemos obtener una conclusión tan obvia. Se trata de un valor demasiado alto, por lo que no podemos asegurar que estas diferencias se deban al origen de los ejemplares por provincias.
+
+Los test de proporciones ya han sido interpretados previamente.
 
 **Conclusiones**
 
