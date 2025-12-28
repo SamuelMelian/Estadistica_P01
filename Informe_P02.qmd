@@ -131,8 +131,8 @@ Primero presentamos un resumen estadístico de la anchura de la cabeza para cada
 datos %>%
   group_by(SEXO) %>%
   summarise(
-    N = sum(!is.na(KB)),
-    Pct_validos (no nulos) = N_valid / n() * 100,
+    N_validos = sum(!is.na(KB)),
+    Pct_validos = N_validos / n() * 100,
     Media = mean(KB, na.rm = TRUE),
     Mediana = median(KB, na.rm = TRUE),
     DE = sd(KB, na.rm = TRUE),
@@ -234,8 +234,8 @@ Primero presentamos un resumen estadístico de la longitud de los élitros para 
 datos %>%
   group_by(SEXO) %>%
   summarise(
-    N_valid = sum(!is.na(EL)),
-    Pct_valid = N_valid / n() * 100,
+    N_validos = sum(!is.na(EL)),
+    Pct_validos = N_validos / n() * 100,
     Media = mean(EL, na.rm = TRUE),
     Mediana = median(EL, na.rm = TRUE),
     SD = sd(EL, na.rm = TRUE),
@@ -334,8 +334,8 @@ Primero presentamos un resumen estadístico de la anchura de la cabeza para cada
 datos %>%
   group_by(PROVINCIA) %>%
   summarise(
-    N_valid = sum(!is.na(KB)),
-    Pct_valid = N_valid / n() * 100,
+    N_validos = sum(!is.na(KB)),
+    Pct_validos = N_validos / n() * 100,
     Media = mean(KB, na.rm = TRUE),
     Mediana = median(KB, na.rm = TRUE),
     SD = sd(KB, na.rm = TRUE),
@@ -471,8 +471,8 @@ Primero presentamos un resumen estadístico de la longitud de los élitros para 
 datos %>%
   group_by(PROVINCIA) %>%
   summarise(
-    N_valid = sum(!is.na(EL)),
-    Pct_valid = N_valid / n() * 100,
+    N_validos = sum(!is.na(EL)),
+    Pct_validos = N_validos / n() * 100,
     Media = mean(EL, na.rm = TRUE),
     Mediana = median(EL, na.rm = TRUE),
     SD = sd(EL, na.rm = TRUE),
@@ -590,7 +590,49 @@ ggplot(datos, aes(x = PROVINCIA, y = EL, fill = PROVINCIA)) +
 
 ## Pregunta 4. Suponiendo que la muestra es representativa de la población, ¿los hábitats son igual de numerosos en Cantabria y Asturias?, ¿y en términos de sexo?
 
-Presentamos a continuación los dos gráficos que representan el porcentaje de individuos de cada provincia y de cada sexo:
+Para responder a esta pregunta vamos a hacer un test de contraste de proporciones que nos permita evaluar si las dos provincias están igualmente representadas en la población. Las hipótesis son
+
+Hipótesis nula ($H_0$): Asturias y Cantabria están igualmente representadas en la población (es decir, $p_{Asturias}=p_{Cantabria}$)
+  
+  Hipótesis alternativa ($H_a$): Asturias y Cantabria no están igualmente representadas en la población (es decir, $p_{Asturias}\neq p_{Cantabria}$)
+
+```{r}
+datos_AC <- datos |>
+  dplyr::filter(PROVINCIA %in% c("Asturias", "Cantabria"))
+
+tabla_habitat <- table(datos_AC$PROVINCIA)
+
+ic_habitat <- prop.test(
+  x = c(tabla_habitat["Asturias"], tabla_habitat["Cantabria"]),
+  n = c(sum(tabla_habitat), sum(tabla_habitat)),
+  correct = FALSE
+)
+
+ic_habitat
+```
+
+
+**Interpretación**: El p-valor es del orden de $10^{-16}$, lo que indica que podemos rechazar la hipótesis nula de igualdad de proporciones. Además, el intervalo de confianza no contiene al 0, lo que refuerza este hecho. Con esto, podemos afirmar que los hábitats no son igual de numerosos en Asturias y Cantabria. 
+
+Para responder a la segunda pregunta y ver si son igual de numerosos en términos de sexo, podemos de nuevo realizar un test de contraste de proporciones, esta vez para el sexo.
+
+
+```{r}
+tabla_habitat <- table(datos$SEXO)
+
+ic_habitat <- prop.test(
+  x = c(tabla_habitat["macho"], tabla_habitat["hembra"]),
+  n = c(sum(tabla_habitat), sum(tabla_habitat)),
+  correct = FALSE
+)
+
+ic_habitat
+```
+
+**Interpretación**: El p-valor obtenido es $0.21$, bastante superior al nivel de significación habitual, por lo que no se rechaza la hipótesis nula de igualdad de proporciones. Este resultado se ve reforzado por el intervalo de confianza al $95\%$, que contiene al valor 0, lo que indica que no se detectan diferencias estadísticamente significativas entre machos y hembras en lo que a la representatividad de los hábitats se refiere.
+
+
+Presentamos a continuación los dos gráficos ilustrativos que representan el porcentaje de individuos de cada provincia y de cada sexo:
 
 ```{r grafico-provincias}
 datos |>
