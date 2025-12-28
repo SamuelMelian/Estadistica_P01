@@ -71,7 +71,7 @@ Y concluiremos comparando las respuestas obtenidas con las conclusiones de la pr
 
 Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos. Excluiremos aquellos cuyo origen es desconocido. Esto supone un cambio en relación con la práctica anterior, en la que se empleaba una muestra aleatoria.
 
-Para resolver las preguntas 1, 2 y 3 se estimaran los intervalos de confianza. Se empleará la distribución t de Student para ver cuál es la tendencia central, así como la dispersión de las variables de estudio. Emplearemos esta prueba para discernir si las diferencias encontradas, entre machos y hembras y según la procedencia, son aleatorias o si, por el contrario, tienen una relevancia estadística. 
+Para resolver las preguntas 1, 2 y 3 se estimarán los intervalos de confianza. Se empleará la distribución t de Student para ver cuál es la tendencia central, así como la dispersión de las variables de estudio. Emplearemos esta prueba para discernir si las diferencias encontradas, entre machos y hembras y según la procedencia, son aleatorias o si, por el contrario, tienen una relevancia estadística. 
 
 Asimismo, el factor geográfico será medido empleando un análisis de la varianza ANOVA para comparar los grupos. Además, la prueba Tukey HSD nos proporcionará una mejor comparación entre los pares.
 
@@ -131,11 +131,11 @@ Primero presentamos un resumen estadístico de la anchura de la cabeza para cada
 datos %>%
   group_by(SEXO) %>%
   summarise(
-    N_valid = sum(!is.na(KB)),
-    Pct_valid = N_valid / n() * 100,
+    N = sum(!is.na(KB)),
+    Pct_validos (no nulos) = N_valid / n() * 100,
     Media = mean(KB, na.rm = TRUE),
     Mediana = median(KB, na.rm = TRUE),
-    SD = sd(KB, na.rm = TRUE),
+    DE = sd(KB, na.rm = TRUE),
     Min = min(KB, na.rm = TRUE),
     Max = max(KB, na.rm = TRUE)
   ) %>%
