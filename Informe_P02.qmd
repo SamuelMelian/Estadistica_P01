@@ -666,17 +666,27 @@ tabla_resumen |>
   )
 ```
 
+En la tabla anterior podemos ver un resumen de los test que hemos llevado a cabo, así como una rápida interpretación de los que nos indican. 
+
+En los análisis por sexo de ambas variables, KB y EL, observamos un resultado con un \textit{p} valor tal que $p<0.001$ empleando el análisis de \textit{t} de Student. Esto indica una fuerte evidencia de la existencia de diferencias reales entre machos y hembras, y se puede concluir que existen dichas diferencias, y que ha sido comprobado estadísticamente.
+
+Por otro lado, para el test ANOVA en ambas variables, se han obtenido unos \textit{p} valores de entre $0.20$ y $0.27$. Dada la interpretación de que las diferencias se pueden dar por azar hasta en un 27\% de los casos, no podemos obtener una conclusión tan obvia. Se trata de un valor demasiado alto, por lo que no podemos asegurar que estas diferencias se deban al origen de los ejemplares por provincias.
+
 **Conclusiones**
-Dimorfismo sexual pronunciado:
-Ausencia de variación geográfica:
 
-IMPORTANTE COMPARAR CON PRACTICA 1
-ENL LA PRACTICA UNO HALLAMOS LA MEDIA DE KB EN LA MUESTRA ERA 12,14, ESTA DENTRO DEL INTERVALO DE CONFIANZA HALLADO EN LA PREGUNTA 1
-EN AMBAS PRACTICAS SE VE EL MARCADO DIMORFISMO SEXUAL EN CUANTO AL TAMAÑO DE LA ANCHURA DE LA CABEZA, ADEMAS EN ESTA ESTUDIAMOS LA LONGITUD DE LOS ELITROS Y DECIR SI HAY O NO DIMORFISMO
-PREGUNTA 3: EN AMBAS PRACTICAS CONCLUIMOS QUE NO SE ENCUENTRA DIFERENCIAS SEGUN PROCEDENCIA
-PREGUTA 4: YA HABIAMOS VISTO QUE EN LA MUESTRA LA MAYOR PARTE DE INDIVIDUOS SON DE ASTURIAS, CONFIRMAMOS CON LO HALLADO EN LA PREGUNTA 4 ¿LA MUESTRA QUE TOMAMOS EN LA PRIMERA PRACTICA GUARDA LOS PORCENTAJES DEL TOTAL, ES DECIR, ES REPRESENTAIVA COMO DECIAMOS? SI
+Tras este análisis empleando inferencia estadística sobre los datos biométricos del ciervo volante, hemos obtenido las siguientes conclusiones. Cabe destacar que gran parte del interés de esta práctica radica en la comparación de este estudio con el realizado previamente a través de la estadística descriptiva, en la práctica 1.
 
+Para comenzar, hemos analizado la variable Anchura de la cabeza (KB) y los resultados confirman lo que ya se veía en la práctica anterior. En ella se tenía que la estimación de la media de la muestra escogida estaba en un 12.14mm. Este valor se encuentra dentro del intervalo de confianza que se ha calculado para la media poblacional en la pregunta 1.
 
+En el caso de la variable Longitud de los élitros (EL), no se realizó en la Práctica 1 un análisis descriptivo tan exahusto como para la variable KB, pero el intervalo de confianza calculado es considerablemente preciso.
+
+A continuación, gracias a los resultados de los análisis de la pregunta 2, podemos confirmar un dimorfismo sexual muy acentuado. Para ambas variables se concluye que los machos poseen valores mayores, de media, en relación con las hembras. Así, se confirma que estos tendrán una mayor anchura de la cabeza y mayor longitud de sus élitros debido a su sexo. Esto también es algo que se había observado e la práctica anterior, y que queda de nuevo confirmado.
+
+Tomando ahora el sesgo geográfico, recordemos que no obtuvimos conclusiones claras en el análisis descriptivo, pues las diferencias no eran significativas. En este nuevo análisis los \textit{p} valores de la tabla tampoco indican una evidencia clara de la influencia del factor geográfico en las diferencias morfológicas que presentan los ejemplares. El análisis de la varianza y las comparaciones realizadas indican que las diferencias entre provincias podrían ser debidas al azar hasta en un 27\% de los casos, lo cual indica una morfología homogénea de los ejemplares en todas las provincias estudiadas.
+
+En la última parte de esta práctica, la pregunta 4, se buscaba confirmar si la muestra con la que se trabajaba en la Práctica 1 era suficientemente representativa de la población total. Los resultados reiteran lo que ya sabíamos: existe una ligera predominancia de ejemplares machos sobre los ejemplares hembras. Además, se tiene un mayor número de ejemplares de Asturias, seguidos de los procedentes de otros lugares, siendo los menos numerosos los venidos de cantabria. Así, se confirma que la muestra tomada es representativa. Por ende, el estudio realizado es adecuado, y sus resultados, fiables.
+
+En conclusión, los resultados obtenidos empleando inferencia estadística confirman aquellos obtenidos en el análisis descriptivo. Las variaciones morfológicas observadas en la especie de estudio se pueden explicar debido al factor sexual, y sin embargo no podemos dar una conclusión acerca de la infuencia del factor geográfico, que no parece tener un efecto significativo. Esto demuestra una validez en el estudio realizado entre ambas prácticas, y confirma que se han obtenido resultados robustos en torno a la población de estudio.
 
 \newpage 
 # Anexo: Código R
