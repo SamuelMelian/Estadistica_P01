@@ -619,7 +619,52 @@ Respecto al sexo de los individuos, se observa una distribución relativamente e
 \newpage 
 # Resumen de resultados y conclusiones
 
-PARA EL RESUMEN DE RESULTADOS HACER UNA TABLA CON LA PREGUNTA EN PLAN (2.1 KB Y SEXO), estadistico t, ... , EL P VALOR Y EL RESULTADO.
+```{r resumen-final}
+tabla_resumen <- data.frame(
+  Analisis = c(
+    "KB (por sexo)",
+    "KB (por provincia)",
+    "EL (por sexo)",
+    "EL (por provincia)"
+  ),
+
+  Test = c(
+    "t de Student",
+    "ANOVA",
+    "t de Student",
+    "ANOVA"
+  ),
+
+  Estadistico = c(
+    paste0("t = ", round(unname(test_KB_sexo$statistic), 3)),
+    paste0("F = ", round(summary(anova_KB)[[1]]$`F value`[1], 3)),
+    paste0("t = ", round(unname(test_EL_sexo$statistic), 3)),
+    paste0("F = ", round(summary(anova_EL)[[1]]$`F value`[1], 3))
+  ),
+
+  `p-valor` = c(
+    signif(test_KB_sexo$p.value, 8),
+    signif(summary(anova_KB)[[1]]$`Pr(>F)`[1], 3),
+    signif(test_EL_sexo$p.value, 8),
+    signif(summary(anova_EL)[[1]]$`Pr(>F)`[1], 3)
+  ),
+
+  Resultado = c(
+    "Concluyente", "Alto, no concluyente", "Concluyente", "Alto, no concluyente"
+  )
+)
+
+tabla_resumen |>
+  kable(
+    caption = "Resumen de los análisis estadísticos realizados",
+    booktabs = TRUE,
+    align = "l"
+  ) |>
+  kable_styling(
+    latex_options = c("hold_position", "striped"),
+    font_size = 9
+  )
+```
 
 **Conclusiones**
 Dimorfismo sexual pronunciado:
@@ -630,6 +675,8 @@ ENL LA PRACTICA UNO HALLAMOS LA MEDIA DE KB EN LA MUESTRA ERA 12,14, ESTA DENTRO
 EN AMBAS PRACTICAS SE VE EL MARCADO DIMORFISMO SEXUAL EN CUANTO AL TAMAÑO DE LA ANCHURA DE LA CABEZA, ADEMAS EN ESTA ESTUDIAMOS LA LONGITUD DE LOS ELITROS Y DECIR SI HAY O NO DIMORFISMO
 PREGUNTA 3: EN AMBAS PRACTICAS CONCLUIMOS QUE NO SE ENCUENTRA DIFERENCIAS SEGUN PROCEDENCIA
 PREGUTA 4: YA HABIAMOS VISTO QUE EN LA MUESTRA LA MAYOR PARTE DE INDIVIDUOS SON DE ASTURIAS, CONFIRMAMOS CON LO HALLADO EN LA PREGUNTA 4 ¿LA MUESTRA QUE TOMAMOS EN LA PRIMERA PRACTICA GUARDA LOS PORCENTAJES DEL TOTAL, ES DECIR, ES REPRESENTAIVA COMO DECIAMOS? SI
+
+
 
 \newpage 
 # Anexo: Código R
