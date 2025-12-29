@@ -4,7 +4,7 @@ author:
   - "Olivia Marcos Diaz de Otazu"
   - "Irene Canales Giménez"
   - "Samuel Melián Benito"
-date: "12/29/2025" 
+date: "12/28/2025" 
 
 format:
   pdf:
@@ -56,7 +56,7 @@ datos <- datos |> dplyr::filter(!is.na(PROVINCIA))
 ```
 \newpage 
 # Objetivo del estudio
-Continuaremos el estudio de datos biométricos del **ciervo volante** (*Lucanus cervus*) estudiando los valores de anchura de cabeza (KB) y longitud de los élitros (EL), y sus diferencias dependiendo de su sexo y procedencia.
+Continuaremos el estudio de datos biométricos del **ciervo volante** (*Lucanus cervus*) estudiando los valores de anchura de cabeza (KB) y longitud de los élitros (EL), y sus diferencias dependiendo de su sexo y procedencia, esta vez usando inferencia estadística.
 
 El objetivo del estudio es responder a las siguentes preguntas:
 
@@ -71,15 +71,15 @@ Y concluiremos comparando las respuestas obtenidas con las conclusiones de la pr
 
 Para esta práctica de inferencia y contrastes de hipótesis, utilizaremos en todo momento el conjunto de datos al completo, es decir, los 250 individuos. Excluiremos aquellos cuyo origen es desconocido. Esto supone un cambio en relación con la práctica anterior, en la que se empleaba una muestra aleatoria.
 
-Para resolver las preguntas 1, 2 y 3 se estimarán los intervalos de confianza. Se empleará la distribución t de Student para ver cuál es la tendencia central, así como la dispersión de las variables de estudio. Emplearemos esta prueba para discernir si las diferencias encontradas, entre machos y hembras y según la procedencia, son aleatorias o si, por el contrario, tienen una relevancia estadística. 
+En primer lugar, para estimar el valor medio poblacional de ambas variables biométricas, se han calculado intervalos de confianza al 95% para la media, empleando la distribución t de Student, dado que la desviación típica poblacional es desconocida.
 
-Asimismo, el factor geográfico será medido empleando un análisis de la varianza ANOVA para comparar los grupos. Además, la prueba Tukey HSD nos proporcionará una mejor comparación entre los pares.
+Para analizar la existencia de diferencias entre sexos, se han realizado contrastes de hipótesis para la igualdad de medias mediante la prueba t de Student para muestras independientes, utilizando la versión de Welch al no asumir igualdad de varianzas. Además, se ha calculado el tamaño del efecto mediante el estadístico d de Cohen.
 
-Finalmente, para resolver la pregunta 4 tomaremos los datos de la población en cuanto a provincia y sexo. Se calculará y representará el porcentaje de individuos en dos gráficos que muestren estas distribuciones, y sus resultados nos ofrecerán una mejor percepción de la fiabilidad de aquellos obtenidos en la Práctica 1.
+El efecto de la procedencia geográfica sobre las variables biométricas se ha evaluado mediante un análisis de la varianza (ANOVA) de un factor, considerando las provincias como niveles del factor. Cuando ha sido necesario, se ha aplicado la prueba post hoc de Tukey HSD para comparar las medias por pares.
+
+Finalmente, para estudiar la representatividad de los hábitats según provincia y sexo, se han realizado contrastes de proporciones mediante el test chi-cuadrado, acompañados de sus correspondientes intervalos de confianza al 95%.
 
 Se incluirán tablas a modo de resumen con los resultados de los análisis ya realizados previamente sobre las variables.
-
-
 
 \newpage
 # Análisis de resultados
@@ -765,7 +765,7 @@ Tras este análisis empleando inferencia estadística sobre los datos biométric
 
 Para comenzar, hemos analizado la variable Anchura de la cabeza (KB) y los resultados confirman lo que ya se veía en la práctica anterior. En ella se tenía que la estimación de la media de la muestra escogida estaba en un 12.14mm. Este valor se encuentra dentro del intervalo de confianza que se ha calculado para la media poblacional en la pregunta 1.
 
-A continuación, gracias a los resultados de los análisis de la pregunta 2, podemos confirmar un dimorfismo sexual muy acentuado. Para ambas variables se observa un p-Valor tal que $p<0.001$, empleando el análisis de \textit{t} de Student. Esto evidencia la existencia de diferencias reales entre machos y hembras. Esto también es algo que se había observado e la práctica anterior, y que queda de nuevo confirmado.
+A continuación, gracias a los resultados de los análisis de la pregunta 2, podemos confirmar un dimorfismo sexual muy acentuado. Para ambas variables se observa un p-Valor tal que $p<0.001$, empleando el análisis de \textit{t} de Student. Esto evidencia la existencia de diferencias reales entre machos y hembras. Esto también es algo que se había observado en la práctica anterior, y que queda de nuevo confirmado.
 
 Tomando ahora el sesgo geográfico, recordemos que no obtuvimos conclusiones claras en el análisis descriptivo, pues las diferencias no eran significativas. En este nuevo análisis los p-Valores de entre $0.20$ y $0.27$ tampoco indican una evidencia clara de la influencia del factor geográfico en las diferencias morfológicas que presentan los ejemplares. El análisis de la varianza y las comparaciones realizadas indican que las diferencias entre provincias podrían ser debidas al azar hasta en un 27\% de los casos, lo cual no permite una conclusión.
 
